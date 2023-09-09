@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -23,7 +25,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 _groundCheckSize = new Vector2(4,2);
     [SerializeField] private LayerMask _groundLayer;
     private Transform _groundCheck;
-
+    
+    [Header("Slope Detection")]
+    [SerializeField] private float _maxSlopeAngle = 50f; // Maximum allowed slope angle in degrees
+    
     private Rigidbody2D _rb;
     private Collider2D _col;
     
@@ -46,6 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Jump();
+        CheckSlope();
     }
     
     #region Ground Check 
@@ -148,4 +154,54 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.GetChild(0).position, _groundCheckSize);
     }
+    
+
+
+
+    private bool _slopeDoOnce = false; // Add this boolean flag
+
+    private void CheckSlope()
+    {
+        if (IsGrounded())
+        {
+            Collider2D groundCollider = GetComponent<Collider2D>();
+
+            // Check if the character's collider is touching the ground layer
+            if (groundCollider.IsTouchingLayers(_groundLayer))
+            {
+                ContactPoint2D[] contacts = new ContactPoint2D[1];
+                int contactCount = groundCollider.GetContacts(contacts);
+
+                if (contactCount > 0)
+                {
+                    Vector2 groundNormal = contacts[0].normal;
+                    float slopeAngle = Vector2.Angle(Vector2.up, groundNormal);
+                    Debug.Log(slopeAngle);
+
+                    // Check if the slope angle is lower than the maximum angle
+                    if (slopeAngle < _maxSlopeAngle)
+                    {
+                        _rb.gravityScale = 0;
+                        if (!_slopeDoOnce) // Check if we haven't already set the rigidbody velocity to zero
+                        {
+                            _rb.velocity = Vector2.zero; // Set the velocity to zero
+                            _slopeDoOnce = true; // Set the flag to true to prevent further changes
+                        }
+                    }
+                    else
+                    {
+                        _slopeDoOnce = false; // Reset the flag when the slope angle is too steep
+                    }
+                }
+            }
+            else
+            {
+                _slopeDoOnce = false; // Reset the flag when not grounded
+            }
+        }
+    }
+
+
+
+
 }
