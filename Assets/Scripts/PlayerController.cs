@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using System.Linq;
-using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private int _extraJumps = 0;
 
     [Header("Ground Check")] 
-    [SerializeField] private float _groundCheckRadius = 0.25f;
+    [SerializeField] private Vector2 _groundCheckSize = new Vector2(4,2);
     [SerializeField] private LayerMask _groundLayer;
     private Transform _groundCheck;
 
@@ -37,17 +33,13 @@ public class PlayerController : MonoBehaviour
     private float _jumpHoldTimer;
     private float _coyoteTimer;
     private float _jumpInputBufferTimer;
-
+    
+    private bool _active;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _groundCheck = transform.GetChild(0).transform;
         _extraJumps = _maxExtraJumps;
-    }
-
-    private void Start()
-    {
-        
     }
 
     private void Update()
@@ -60,8 +52,7 @@ public class PlayerController : MonoBehaviour
     private bool IsGrounded()
     {
         // Check if the player is grounded, return result
-        Collider2D colliders = Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _groundLayer );
-
+        Collider2D colliders = Physics2D.OverlapBox(_groundCheck.position, _groundCheckSize,0, _groundLayer );
         return colliders != null;
     }
     
@@ -143,12 +134,18 @@ public class PlayerController : MonoBehaviour
     {
         // Move the player horizontally.
         float moveDirection = Input.GetAxis("Horizontal");
-        _rb.velocity = new Vector2(moveDirection * _moveSpeed, _rb.velocity.y); 
+        _rb.velocity = new Vector2(moveDirection * _moveSpeed, _rb.velocity.y);
         
         // Changes gravity based on if the character is falling or jumping.
         _rb.gravityScale = _isJumping ? _jumpGravScale : _fallGravScale;
+        
     }
-
     #endregion
     
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow cube at the transform position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.GetChild(0).position, _groundCheckSize);
+    }
 }

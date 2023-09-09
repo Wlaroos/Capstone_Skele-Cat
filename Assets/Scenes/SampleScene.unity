@@ -649,13 +649,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 15
-  _jumpForce: 15
-  _jumpTime: 0.15
   _jumpGravScale: 5
   _fallGravScale: 15
-  _coyoteTime: 0.1
-  _additionalJumps: 0
-  _extraHeight: 0.25
+  _jumpForce: 15
+  _maxJumpHold: 0.15
+  _maxCoyoteTime: 0.1
+  _maxJumpInputBuffer: 0.2
+  _maxExtraJumps: 1
+  _groundCheckRadius: 0.5
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -675,7 +676,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 8258e59239a224c4ea2b2b8aa95007b4, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
