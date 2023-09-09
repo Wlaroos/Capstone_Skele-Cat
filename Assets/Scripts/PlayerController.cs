@@ -9,20 +9,19 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float _moveSpeed = 15f;
     
-    [Header("Jumping")]
-    [SerializeField] private float _jumpForce = 15;
-    [SerializeField] private float _maxJumpHold = 0.15f;
+    [Header("Gravity")]
     [SerializeField] private float _jumpGravScale = 5f;
     [SerializeField] private float _fallGravScale = 15f;
     
+    [Header("Jumping")]
+    [SerializeField] private float _jumpForce = 15;
+    [SerializeField] private float _maxJumpHold = 0.15f;
+    [Space(10)]
     [SerializeField] private float _maxCoyoteTime = 0.1f;
-    private float _coyoteTimer;
-    
     [SerializeField] private float _maxJumpInputBuffer = 0.2f;
-    private float _jumpInputBufferTimer;
     
-    [SerializeField] private int _defaultAdditionalJumps = 1;
-    private int _additionalJumps = 0;
+    [SerializeField] private int _maxExtraJumps = 1;
+    private int _extraJumps = 0;
 
     [Header("Ground Check")] 
     [SerializeField] private float _groundCheckRadius = 0.25f;
@@ -36,12 +35,14 @@ public class PlayerController : MonoBehaviour
 
 
     private float _jumpHoldTimer;
+    private float _coyoteTimer;
+    private float _jumpInputBufferTimer;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _groundCheck = transform.GetChild(0).transform;
-        _additionalJumps = _defaultAdditionalJumps;
+        _extraJumps = _maxExtraJumps;
     }
 
     private void Start()
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour
         if (IsGrounded() && !_isJumping)
         {
             _coyoteTimer = _maxCoyoteTime;
-            _additionalJumps = _defaultAdditionalJumps;
+            _extraJumps = _maxExtraJumps;
         }
         // Coyote time decreases if the player is in the air and not jumping
         // ie, falling
@@ -87,12 +88,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             // Players Jumps Again if an Additional Jump is Available
-            if (_additionalJumps > 0 && !IsGrounded())
+            if (_extraJumps > 0 && !IsGrounded())
             {
                 _isJumping = true;
                 _jumpHoldTimer = _maxJumpHold;
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
-                _additionalJumps -= 1;
+                _extraJumps -= 1;
                 _jumpInputBufferTimer = 0;
             }
             _jumpInputBufferTimer = _maxJumpInputBuffer;
