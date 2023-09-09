@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,43 +11,42 @@ public class PlayerController : MonoBehaviour
     
     [Header("Jumping")]
     [SerializeField] private float _jumpForce = 15;
-    [SerializeField] private float _jumpTime = 0.15f;
+    [SerializeField] private float _maxJumpHold = 0.15f;
     [SerializeField] private float _jumpGravScale = 5f;
     [SerializeField] private float _fallGravScale = 15f;
     
-    [SerializeField] private float _coyoteTime = 0.1f;
-    private float _coyoteTimeCounter;
+    [SerializeField] private float _maxCoyoteTime = 0.1f;
+    private float _coyoteTimer;
     
-    [SerializeField] private float _jumpBufferTime = 0.2f;
-    private float _jumpBufferCounter;
+    [SerializeField] private float _maxJumpInputBuffer = 0.2f;
+    private float _jumpInputBufferTimer;
     
-    [SerializeField] private int _additionalJumps = 0;
+    [SerializeField] private int _defaultAdditionalJumps = 1;
+    private int _additionalJumps = 0;
 
     [Header("Ground Check")] 
-    [SerializeField] private float _extraHeight = 0.25f;
+    [SerializeField] private float _groundCheckRadius = 0.25f;
     [SerializeField] private LayerMask _groundLayer;
+    private Transform _groundCheck;
 
     private Rigidbody2D _rb;
     private Collider2D _col;
-
-    private RaycastHit2D _groundHit;
     
-    private bool _isGrounded;
     private bool _isJumping;
-    private bool _isFalling;
 
-    private float _jumpTimeCounter;
-    private float _apexTimeCounter;
+
+    private float _jumpHoldTimer;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _col = GetComponent<Collider2D>();
+        _groundCheck = transform.GetChild(0).transform;
+        _additionalJumps = _defaultAdditionalJumps;
     }
 
     private void Start()
     {
-
+        
     }
 
     private void Update()
@@ -58,17 +58,10 @@ public class PlayerController : MonoBehaviour
     #region Ground Check 
     private bool IsGrounded()
     {
-        // Check if the player is grounded using Raycast.
-        _groundHit = Physics2D.BoxCast(_col.bounds.center,_col.bounds.size,0f,Vector2.down,_extraHeight,_groundLayer);
+        // Check if the player is grounded, return result
+        Collider2D colliders = Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _groundLayer );
 
-        if (_groundHit.collider != null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return colliders != null;
     }
     
     #endregion
@@ -76,85 +69,72 @@ public class PlayerController : MonoBehaviour
     #region Jumping and Falling
     private void Jump()
     {
-        if (IsGrounded())
+        // Reset coyote time and extra jumps when the player is grounded and not jumping
+        if (IsGrounded() && !_isJumping)
         {
-            _coyoteTimeCounter = _coyoteTime;
+            _coyoteTimer = _maxCoyoteTime;
+            _additionalJumps = _defaultAdditionalJumps;
         }
+        // Coyote time decreases if the player is in the air and not jumping
+        // ie, falling
         else
         {
-            _coyoteTimeCounter -= Time.deltaTime;
+            _coyoteTimer -= Time.deltaTime;
         }
         
-        // Pressing space starts the jump buffer time
+        // Jump Input Resets the Jump Buffer Timer
+        // (Allows the Player to Input the Jump Button a Little Early and Still Have a Successful Jump)
         if (Input.GetButtonDown("Jump"))
         {
-            _jumpBufferCounter = _jumpBufferTime;
+            // Players Jumps Again if an Additional Jump is Available
+            if (_additionalJumps > 0 && !IsGrounded())
+            {
+                _isJumping = true;
+                _jumpHoldTimer = _maxJumpHold;
+                _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+                _additionalJumps -= 1;
+                _jumpInputBufferTimer = 0;
+            }
+            _jumpInputBufferTimer = _maxJumpInputBuffer;
         }
+        // Buffer time is always decreasing
         else
         {
-            _jumpBufferCounter -= Time.deltaTime;
+            _jumpInputBufferTimer -= Time.deltaTime;
         }
 
-        // The player jumps if there is a jump input within buffer time and the coyote time is not out
-        if (_jumpBufferCounter > 0 && _coyoteTimeCounter > 0)
+        // Checks for input buffer and coyote time, will jump if allowed
+        if (_jumpInputBufferTimer > 0 && _coyoteTimer > 0 && !_isJumping)
         {
             _isJumping = true;
-            _jumpTimeCounter = _jumpTime;
+            _jumpHoldTimer = _maxJumpHold;
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
-
-            _jumpBufferCounter = 0;
+            
+            _jumpInputBufferTimer = 0;
         }
         
         // Increased jump height while holding the button down
         if (Input.GetButton("Jump"))
         {
-            if (_jumpTimeCounter > 0 && _isJumping)
+            if (_jumpHoldTimer > 0 && _isJumping)
             {
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
-                _jumpTimeCounter -= Time.deltaTime;
+                _jumpHoldTimer -= Time.deltaTime;
             }
-            else if (_jumpTimeCounter == 0)
+            else if (_jumpHoldTimer == 0)
             {
                 _isJumping = false;
-                _isFalling = true;
             }
         }
         
-        // Button was released
+        // Jump button is released, reset coyote time
         if (Input.GetButtonUp("Jump"))
         {
             _isJumping = false;
-            _isFalling = true;
-            _coyoteTimeCounter = 0f;
-        }
-        
-        if (!_isJumping && CheckForLand())
-        {
-            // Do Landed Thing
+            _coyoteTimer = 0f;
         }
     }
     
-    private bool CheckForLand()
-    {
-        if (_isFalling)
-        {
-            if (IsGrounded())
-            {
-                //Player has landed
-                _isFalling = false;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     #endregion
 
     #region Movement
@@ -162,10 +142,10 @@ public class PlayerController : MonoBehaviour
     {
         // Move the player horizontally.
         float moveDirection = Input.GetAxis("Horizontal");
-        
-        _rb.gravityScale = _isJumping ? _jumpGravScale : _fallGravScale;
-        
         _rb.velocity = new Vector2(moveDirection * _moveSpeed, _rb.velocity.y); 
+        
+        // Changes gravity based on if the character is falling or jumping.
+        _rb.gravityScale = _isJumping ? _jumpGravScale : _fallGravScale;
     }
 
     #endregion
