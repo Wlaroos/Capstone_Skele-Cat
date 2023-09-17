@@ -10,7 +10,7 @@ public class ColliderToMesh : MonoBehaviour
     {
         int pointCount = 0;
         PolygonCollider2D pc2 = gameObject.GetComponent<PolygonCollider2D>();
-        pointCount = pc2.GetTotalPointCount() / 2;
+        pointCount = pc2.GetTotalPointCount();
 
         MeshFilter mf = GetComponent<MeshFilter>();
         Mesh mesh = new Mesh();
