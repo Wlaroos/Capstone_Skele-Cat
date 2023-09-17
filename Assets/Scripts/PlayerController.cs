@@ -20,6 +20,12 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private int _maxExtraJumps = 1;
     private int _extraJumps = 0;
+    
+    private bool _isJumping;
+    
+    private float _jumpHoldTimer;
+    private float _coyoteTimer;
+    private float _jumpInputBufferTimer;
 
     [Header("Ground Check")] 
     [SerializeField] private Vector2 _groundCheckSize = new Vector2(4,2);
@@ -27,22 +33,28 @@ public class PlayerController : MonoBehaviour
     private Transform _groundCheck;
     
     [Header("Slope Detection")]
-    [SerializeField] private float _maxSlopeAngle = 50f; // Maximum allowed slope angle in degrees
+    [SerializeField] private float _maxSlopeAngle = 60f;
+    [SerializeField] private float _slopeCheckDistance = 0.5f; 
+    [SerializeField] private PhysicsMaterial2D _noFriction;
+    [SerializeField] private PhysicsMaterial2D _fullFriction;
     
+    private bool _isOnSlope;
+    private bool _canWalkOnSlope;
+    
+    private float _slopeDownAngle;
+    private float _slopeSideAngle;
+    private float _lastSlopeAngle;
+    
+    private Vector2 _slopeNormalPerp;
+    
+    // OTHER VARS
     private Rigidbody2D _rb;
-    private Collider2D _col;
+    private CapsuleCollider2D _cc;
     
-    private bool _isJumping;
-
-
-    private float _jumpHoldTimer;
-    private float _coyoteTimer;
-    private float _jumpInputBufferTimer;
-    
-    private bool _active;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _cc = GetComponent<CapsuleCollider2D>();
         _groundCheck = transform.GetChild(0).transform;
         _extraJumps = _maxExtraJumps;
     }
@@ -51,7 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Jump();
-        CheckSlope();
+        SlopeCheck();
     }
     
     #region Ground Check 
@@ -119,7 +131,7 @@ public class PlayerController : MonoBehaviour
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
                 _jumpHoldTimer -= Time.deltaTime;
             }
-            else if (_jumpHoldTimer == 0)
+            else if (_jumpHoldTimer <= 0 && _rb.velocity.y < 0)
             {
                 _isJumping = false;
             }
@@ -145,6 +157,23 @@ public class PlayerController : MonoBehaviour
         // Changes gravity based on if the character is falling or jumping.
         _rb.gravityScale = _isJumping ? _jumpGravScale : _fallGravScale;
         
+        // Makes the player fall really slowly if they are on the very edge of the platform.
+        if (IsGrounded() && !_isJumping && moveDirection == 0)
+        {
+            _rb.gravityScale = 0f;
+        }
+        
+        // SLOPE CHECK BITCHES
+        if (IsGrounded() && _isOnSlope && _canWalkOnSlope && !_isJumping) //If on slope
+        {
+            _rb.velocity = new Vector2 (_moveSpeed * _slopeNormalPerp.x * -moveDirection, _moveSpeed * _slopeNormalPerp.y * -moveDirection);
+        }
+
+        if (_rb.velocity.y > 15)
+        {
+            _rb.velocity = new Vector2( _rb.velocity.x, 15f);
+        }
+        
     }
     #endregion
     
@@ -155,53 +184,79 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(transform.GetChild(0).position, _groundCheckSize);
     }
     
-
-
-
-    private bool _slopeDoOnce = false; // Add this boolean flag
-
-    private void CheckSlope()
+    private void SlopeCheck()
     {
-        if (IsGrounded())
-        {
-            Collider2D groundCollider = GetComponent<Collider2D>();
+        Vector2 checkPos = transform.position - (Vector3)(new Vector2(0.0f, _cc.size.y / 2));
 
-            // Check if the character's collider is touching the ground layer
-            if (groundCollider.IsTouchingLayers(_groundLayer))
-            {
-                ContactPoint2D[] contacts = new ContactPoint2D[1];
-                int contactCount = groundCollider.GetContacts(contacts);
-
-                if (contactCount > 0)
-                {
-                    Vector2 groundNormal = contacts[0].normal;
-                    float slopeAngle = Vector2.Angle(Vector2.up, groundNormal);
-                    Debug.Log(slopeAngle);
-
-                    // Check if the slope angle is lower than the maximum angle
-                    if (slopeAngle < _maxSlopeAngle)
-                    {
-                        _rb.gravityScale = 0;
-                        if (!_slopeDoOnce) // Check if we haven't already set the rigidbody velocity to zero
-                        {
-                            _rb.velocity = Vector2.zero; // Set the velocity to zero
-                            _slopeDoOnce = true; // Set the flag to true to prevent further changes
-                        }
-                    }
-                    else
-                    {
-                        _slopeDoOnce = false; // Reset the flag when the slope angle is too steep
-                    }
-                }
-            }
-            else
-            {
-                _slopeDoOnce = false; // Reset the flag when not grounded
-            }
-        }
+        SlopeCheckHorizontal(checkPos);
+        SlopeCheckVertical(checkPos);
     }
 
+    private void SlopeCheckHorizontal(Vector2 checkPos)
+    {
+        RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, _slopeCheckDistance, _groundLayer);
+        RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, _slopeCheckDistance, _groundLayer);
 
+        if (slopeHitFront)
+        {
+            _isOnSlope = true;
 
+            _slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
 
+        }
+        else if (slopeHitBack)
+        {
+            _isOnSlope = true;
+
+            _slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+        }
+        else
+        {
+            _slopeSideAngle = 0.0f;
+            _isOnSlope = false;
+        }
+
+    }
+
+    private void SlopeCheckVertical(Vector2 checkPos)
+    {      
+        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, _slopeCheckDistance, _groundLayer);
+
+        if (hit)
+        {
+
+            _slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;            
+
+            _slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+            if(_slopeDownAngle != _lastSlopeAngle)
+            {
+                _isOnSlope = true;
+            }                       
+
+            _lastSlopeAngle = _slopeDownAngle;
+           
+            Debug.DrawRay(hit.point, _slopeNormalPerp, Color.blue);
+            Debug.DrawRay(hit.point, hit.normal, Color.green);
+
+        }
+
+        if (_slopeDownAngle > _maxSlopeAngle || _slopeSideAngle > _maxSlopeAngle)
+        {
+            _canWalkOnSlope = false;
+        }
+        else
+        {
+            _canWalkOnSlope = true;
+        }
+
+        if (_isOnSlope && _canWalkOnSlope && Input.GetAxis("Horizontal") == 0.0f)
+        {
+            _rb.sharedMaterial = _fullFriction;
+        }
+        else
+        {
+            _rb.sharedMaterial = _noFriction;
+        }
+    }
 }

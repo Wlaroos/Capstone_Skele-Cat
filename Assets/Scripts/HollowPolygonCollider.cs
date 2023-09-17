@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SetGeometry : MonoBehaviour
 {
-    private float dist = 0.01f;
+    [SerializeField] private float _thickness = 0.01f;
 
     void Start()
     {
@@ -15,7 +15,7 @@ public class SetGeometry : MonoBehaviour
         Vector2[] innerPath = new Vector2[outerPath.Length];
         for (int i = 0; i < outerPath.Length; i++)
         {
-            innerPath[i] = outerPath[i] + (outerPath[i] - collider.offset).normalized * dist;
+            innerPath[i] = outerPath[i] + (outerPath[i] - collider.offset).normalized * -_thickness;
         }
 
         collider.pathCount = 2;

@@ -394,7 +394,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1050,8 +1050,8 @@ GameObject:
   - component: {fileID: 904302994}
   - component: {fileID: 904302995}
   - component: {fileID: 904303000}
-  - component: {fileID: 904302999}
   - component: {fileID: 904303001}
+  - component: {fileID: 904302999}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1143,17 +1143,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 15
   _jumpGravScale: 5
-  _fallGravScale: 15
+  _fallGravScale: 12
   _jumpForce: 15
-  _maxJumpHold: 0.15
+  _maxJumpHold: 0.2
   _maxCoyoteTime: 0.1
-  _maxJumpInputBuffer: 0.2
+  _maxJumpInputBuffer: 0.15
   _maxExtraJumps: 0
-  _groundCheckSize: {x: 0.5, y: 0.5}
+  _groundCheckSize: {x: 0.66, y: 0.15}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  _maxSlopeAngle: 60
+  _maxSlopeAngle: 30
+  _slopeCheckDistance: 0.5
+  _noFriction: {fileID: 6200000, guid: 0173430e86c294c449ef29f7a7012788, type: 2}
+  _fullFriction: {fileID: 6200000, guid: 7bb8f0348fd5bc14d8825ed64b75d31d, type: 2}
 --- !u!50 &904303000
 Rigidbody2D:
   serializedVersion: 4
@@ -1170,7 +1173,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 8258e59239a224c4ea2b2b8aa95007b4, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2022,7 +2025,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006972670}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f40c6ac89f614ef40a618e6bcf74948f, type: 3}
   m_Name: 
@@ -2150,11 +2153,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006972670}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c5328ee5c171064383fb35700cef073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thickness: 0.01
 --- !u!1 &2054610717
 GameObject:
   m_ObjectHideFlags: 0
