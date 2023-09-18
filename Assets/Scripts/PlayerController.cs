@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -84,6 +84,16 @@ public class PlayerController : MonoBehaviour
         Jump();
         SlopeCheck();
         Timer();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
             
         // Right click to blow up, can be done during the tutorial.
         if (Input.GetButtonDown("Explode"))
