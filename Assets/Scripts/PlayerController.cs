@@ -311,7 +311,7 @@ public class PlayerController : MonoBehaviour
 
     #region Explode
     
-    private void Explode()
+    public void Explode()
     { 
         _isAlive = false;
         //_musicRef.PlaySound(_floatSFX);

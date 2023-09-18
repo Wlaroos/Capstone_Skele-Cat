@@ -26,13 +26,14 @@ public class BloodParticles : MonoBehaviour
         int i = 0;
         while (i < numCollisionEvents)
         {
-            // Collision position
-            Vector3 pos = _collisionEvents[i].intersection;
-            // Spawn new collision that player can walk on
-            var rotation = other.transform.rotation;
-            GameObject particleFloor = Instantiate(_particleFloor, pos, Quaternion.EulerAngles(rotation.x, rotation.y, rotation.z * 2f));
-            particleFloor.GetComponent<BoxCollider2D>().size = new Vector2(.2f,.2f);
-            i++;
+                // Collision position
+                Vector3 pos = _collisionEvents[i].intersection;
+                // Spawn new collision that player can walk on
+                var rotation = other.transform.rotation;
+                GameObject particleFloor = Instantiate(_particleFloor, pos,
+                    Quaternion.EulerAngles(rotation.x, rotation.y, rotation.z * 2f));
+                particleFloor.GetComponent<BoxCollider2D>().size = new Vector2(.2f, .2f);
+                i++;
         }
     }
 
