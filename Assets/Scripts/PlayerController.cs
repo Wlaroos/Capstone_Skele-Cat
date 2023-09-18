@@ -1,6 +1,6 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,12 +17,12 @@ public class PlayerController : MonoBehaviour
     [Space(10)]
     [SerializeField] private float _maxCoyoteTime = 0.1f;
     [SerializeField] private float _maxJumpInputBuffer = 0.2f;
-    
+    //
     [SerializeField] private int _maxExtraJumps = 1;
-    private int _extraJumps = 0;
-    
+    private int _extraJumps;
+    //
     private bool _isJumping;
-    
+    //
     private float _jumpHoldTimer;
     private float _coyoteTimer;
     private float _jumpInputBufferTimer;
@@ -37,19 +37,35 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _slopeCheckDistance = 0.5f; 
     [SerializeField] private PhysicsMaterial2D _noFriction;
     [SerializeField] private PhysicsMaterial2D _fullFriction;
-    
+    //
     private bool _isOnSlope;
     private bool _canWalkOnSlope;
-    
+    //
     private float _slopeDownAngle;
     private float _slopeSideAngle;
     private float _lastSlopeAngle;
-    
+    //
     private Vector2 _slopeNormalPerp;
+    
+    [Header("Blood")]
+    [SerializeField] ParticleSystem _bloodParticle;
+    [SerializeField] int _bloodAmount = 300;
+    [SerializeField] int _bloodDecrement = 100;
+    
+    [Header("Timer")]
+    [SerializeField] Text _hudTimerText;
+    [SerializeField] private int _maxTimerCount = 10; 
+    private int _timerCount = 10;
+    private float _timeRemaining = 1;
     
     // OTHER VARS
     private Rigidbody2D _rb;
     private CapsuleCollider2D _cc;
+    //
+    private bool _isAlive = true;
+    bool _facingRight = true;
+    //
+    private Vector3 _playerSpawn;
     
     private void Awake()
     {
@@ -57,13 +73,23 @@ public class PlayerController : MonoBehaviour
         _cc = GetComponent<CapsuleCollider2D>();
         _groundCheck = transform.GetChild(0).transform;
         _extraJumps = _maxExtraJumps;
+        _timerCount = _maxTimerCount;
+        _playerSpawn = transform.position;
     }
 
     private void Update()
     {
+        if (_isAlive != true) return;
         Move();
         Jump();
         SlopeCheck();
+        Timer();
+            
+        // Right click to blow up, can be done during the tutorial.
+        if (Input.GetButtonDown("Explode"))
+        {
+            Explode();
+        }
     }
     
     #region Ground Check 
@@ -174,6 +200,16 @@ public class PlayerController : MonoBehaviour
             _rb.velocity = new Vector2( _rb.velocity.x, 15f);
         }
         
+        // FLIP CHECKS
+        if (_rb.velocity.x > 0 && !_facingRight)  // Moving right, facing left
+        {
+            Flip(); // Flip right
+        }
+        else if (_rb.velocity.x < 0 && _facingRight) // Moving left, facing right
+        {
+            Flip(); // Flip left
+        }
+        
     }
     #endregion
     
@@ -183,6 +219,8 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.GetChild(0).position, _groundCheckSize);
     }
+    
+    #region Slopes
     
     private void SlopeCheck()
     {
@@ -194,8 +232,9 @@ public class PlayerController : MonoBehaviour
 
     private void SlopeCheckHorizontal(Vector2 checkPos)
     {
-        RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, _slopeCheckDistance, _groundLayer);
-        RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, _slopeCheckDistance, _groundLayer);
+        var right = transform.right;
+        RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, right, _slopeCheckDistance, _groundLayer);
+        RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -right, _slopeCheckDistance, _groundLayer);
 
         if (slopeHitFront)
         {
@@ -258,5 +297,108 @@ public class PlayerController : MonoBehaviour
         {
             _rb.sharedMaterial = _noFriction;
         }
+    }
+    
+    #endregion
+    
+    private void Flip()
+    {
+        _facingRight = !_facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+
+    #region Explode
+    
+    private void Explode()
+    { 
+        _isAlive = false;
+        //_musicRef.PlaySound(_floatSFX);
+        //GetComponentInChildren<ParticleSystem>().Stop();
+        //GetComponent<CharacterAnimations>().setIsAlive(false);
+        _rb.gravityScale = 0;
+        _rb.velocity = new Vector2(0, 1f);
+        _cc.enabled = false;
+        
+        this.DelayAction(ExplodeDelay, .75f);
+    }
+    
+    private void ExplodeDelay()
+    {
+        //_musicRef.PlaySound(_explodeSFX[Random.Range(0, 2)]);
+        //AudioHelper.PlayClip2D(_meowSFX, 1f);
+        ParticleSystem bloodParticle = Instantiate(_bloodParticle, transform.position, Quaternion.identity);
+        bloodParticle.GetComponent<BloodParticles>().SetParticleAmount(_bloodAmount);
+        //shake.CamShakeReverse();
+        //New particles if in skeleton state
+        /*if (_currentState == _stateEnum.One)
+        {
+            ParticleSystem boneParticle = Instantiate(_boneParticle, transform.position, Quaternion.identity);
+        }*/
+        StateChange();
+    }
+    
+    #endregion
+    
+        private void StateChange()
+    {
+        transform.position = _playerSpawn;
+        _rb.velocity = new Vector3(0,0,0);
+        _rb.gravityScale = 0;
+        GetComponent<SpriteRenderer>().enabled = false;
+        _bloodAmount -= _bloodDecrement;
+        
+        FindObjectOfType<HUDMenu>().hp--;
+        DelayHelper.DelayAction(this, Respawn, 2f);
+    }
+    
+    private void Timer()
+    {
+        // Timer decrement
+        if (_timerCount >= 1 && _isAlive == true)
+        {
+            _timeRemaining -= Time.deltaTime;
+        }
+
+        // Timer runs out, player explodes
+        else if (_timerCount < 1 && _isAlive == true)
+        {
+            //_musicRef.PlaySound(_tickHighSFX);
+            Explode();
+        }
+        // Reset the timer and update the timer text (timeRemaining counts for 1 second, timerCount is how many seconds)
+        if (_timeRemaining <= 0)
+        {
+            _timeRemaining = 1;
+            _timerCount--;
+            _hudTimerText.text = ("" + ((Mathf.Round(_timeRemaining) + _timerCount - 1)));
+            // Tick sound effect and camera shake if timer isn't on the last second
+            if (_timerCount >= 1)
+            { 
+                //_musicRef.PlaySound(_tickSFX);
+                // shake.CamShake();
+            }
+        }
+    }
+    
+    private void Respawn()
+    {
+        _isAlive = true;
+        _cc.enabled = true;
+        //GetComponent<CharacterAnimations>().setIsAlive(true);
+        //GetComponentInChildren<ParticleSystem>().Play();
+        //_rb.gravityScale = 1;
+        //GetComponent<SpriteRenderer>().color = Color.white;
+        GetComponent<SpriteRenderer>().enabled = true;
+        _timerCount = _maxTimerCount;
+        _hudTimerText.text = ("" + ((Mathf.Round(_timeRemaining) + _timerCount - 1)));
+    }
+
+    private void Kill()
+    {
+        // Unhides the canvas UI
+        //GameObject.Find("CanvasMenu").GetComponent<CanvasMenu>().PlayerDeath();
+        //_musicRef.PlaySound(_deathSFX);
     }
 }

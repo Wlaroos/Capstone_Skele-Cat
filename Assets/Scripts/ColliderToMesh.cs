@@ -1,16 +1,14 @@
 using UnityEngine;
-using System.Collections;
 
 [RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 public class ColliderToMesh : MonoBehaviour
 {
-    void Start()
+    private void Start()
     {
-        int pointCount = 0;
         PolygonCollider2D pc2 = gameObject.GetComponent<PolygonCollider2D>();
-        pointCount = pc2.GetTotalPointCount();
+        int pointCount = pc2.GetTotalPointCount();
 
         MeshFilter mf = GetComponent<MeshFilter>();
         Mesh mesh = new Mesh();
