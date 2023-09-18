@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 193708854}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1521,7 +1521,7 @@ GameObject:
   - component: {fileID: 904303000}
   - component: {fileID: 904303001}
   - component: {fileID: 904302999}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1702,7 +1702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 945897151}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: StepRayUpper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2579,7 +2579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1830778970}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: StepRayLower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2615,7 +2615,7 @@ GameObject:
   - component: {fileID: 2006972672}
   - component: {fileID: 2006972671}
   - component: {fileID: 2006972676}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Poly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
