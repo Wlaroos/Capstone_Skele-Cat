@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Through
   - Spawns
+  - P_Collision
+  - P_Explode
   layers:
   - Default
   - TransparentFX
