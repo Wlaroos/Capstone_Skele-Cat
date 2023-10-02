@@ -1862,7 +1862,7 @@ MonoBehaviour:
   _maxJumpHold: 0.2
   _maxCoyoteTime: 0.1
   _maxJumpInputBuffer: 0.15
-  _maxExtraJumps: 1
+  _maxExtraJumps: 0
   _groundCheckSize: {x: 0.66, y: 0.25}
   _groundLayer:
     serializedVersion: 2
