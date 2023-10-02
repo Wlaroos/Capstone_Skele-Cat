@@ -187,7 +187,8 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         // Move the player horizontally.
-        float moveDirection = Input.GetAxis("Horizontal");
+        float moveDirection = Input.GetAxisRaw("Horizontal");
+        Debug.Log(moveDirection);
         _rb.velocity = new Vector2(moveDirection * _moveSpeed, _rb.velocity.y);
         
         // Changes gravity based on if the character is falling or jumping.
