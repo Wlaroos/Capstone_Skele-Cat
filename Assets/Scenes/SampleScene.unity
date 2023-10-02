@@ -1855,10 +1855,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9c19a4a13743c6409e6389786d13ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 12
+  _moveSpeed: 8
   _jumpGravScale: 5
   _fallGravScale: 12
-  _jumpForce: 15
+  _jumpForce: 12
   _maxJumpHold: 0.2
   _maxCoyoteTime: 0.1
   _maxJumpInputBuffer: 0.15
