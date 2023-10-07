@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour
     bool _facingRight = true;
     //
     private Vector3 _playerSpawn;
+
+    private GameObject _particleHolder;
     
     private void Awake()
     {
@@ -75,6 +77,7 @@ public class PlayerController : MonoBehaviour
         _extraJumps = _maxExtraJumps;
         _timerCount = _maxTimerCount;
         _playerSpawn = transform.position;
+        _particleHolder = GameObject.Find("ParticleHolder");
     }
 
     private void Update()
@@ -339,7 +342,7 @@ public class PlayerController : MonoBehaviour
     {
         //_musicRef.PlaySound(_explodeSFX[Random.Range(0, 2)]);
         //AudioHelper.PlayClip2D(_meowSFX, 1f);
-        ParticleSystem bloodParticle = Instantiate(_bloodParticle, transform.position, Quaternion.identity);
+        ParticleSystem bloodParticle = Instantiate(_bloodParticle, transform.position, Quaternion.identity , _particleHolder.transform);
         bloodParticle.GetComponent<BloodParticles>().SetParticleAmount(_bloodAmount);
         //shake.CamShakeReverse();
         //New particles if in skeleton state

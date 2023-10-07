@@ -57,9 +57,7 @@ public class BloodParticles : MonoBehaviour
                 Vector3 pos = _collisionEvents[i].intersection;
                 // Spawn new collision that player can walk on
                 var rotation = other.transform.rotation;
-                GameObject particleFloor = Instantiate(_particleFloor, pos,Quaternion.EulerAngles(rotation.x, rotation.y, rotation.z * 2f), transform.GetChild(0));
-                particleFloor.GetComponent<BoxCollider2D>().usedByComposite = true;
-                particleFloor.GetComponent<BoxCollider2D>().size = new Vector2(.2f, .2f);
+                Instantiate(_particleFloor, pos,Quaternion.EulerAngles(rotation.x, rotation.y, rotation.z * 2f), transform.parent.GetChild(0));
             }
             i++;
         }
