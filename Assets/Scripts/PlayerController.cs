@@ -87,17 +87,7 @@ public class PlayerController : MonoBehaviour
         Jump();
         SlopeCheck();
         Timer();
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
         
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-            
         // Right click to blow up, can be done during the tutorial.
         if (Input.GetButtonDown("Explode"))
         {
@@ -191,7 +181,7 @@ public class PlayerController : MonoBehaviour
     {
         // Move the player horizontally.
         float moveDirection = Input.GetAxisRaw("Horizontal");
-        Debug.Log(moveDirection);
+        //Debug.Log(moveDirection);
         _rb.velocity = new Vector2(moveDirection * _moveSpeed, _rb.velocity.y);
         
         // Changes gravity based on if the character is falling or jumping.
