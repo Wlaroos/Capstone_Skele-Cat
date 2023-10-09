@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     // OTHER VARS
     private Rigidbody2D _rb;
     private CapsuleCollider2D _cc;
+    private Animator _anim;
     //
     private bool _isAlive = true;
     bool _facingRight = true;
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _cc = GetComponent<CapsuleCollider2D>();
+        _anim = GetComponent<Animator>();
         _groundCheck = transform.GetChild(0).transform;
         _extraJumps = _maxExtraJumps;
         _timerCount = _maxTimerCount;
@@ -100,6 +102,7 @@ public class PlayerController : MonoBehaviour
     {
         // Check if the player is grounded, return result
         Collider2D colliders = Physics2D.OverlapBox(_groundCheck.position, _groundCheckSize,0, _groundLayer );
+        _anim.SetBool("Grounded", colliders != null);
         return colliders != null;
     }
     
@@ -129,6 +132,7 @@ public class PlayerController : MonoBehaviour
             if (_extraJumps > 0 && !IsGrounded())
             {
                 _isJumping = true;
+                _anim.SetBool("Jumping", true);
                 _jumpHoldTimer = _maxJumpHold;
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
                 _extraJumps -= 1;
@@ -146,6 +150,7 @@ public class PlayerController : MonoBehaviour
         if (_jumpInputBufferTimer > 0 && _coyoteTimer > 0 && !_isJumping)
         {
             _isJumping = true;
+            _anim.SetBool("Jumping", true);
             _jumpHoldTimer = _maxJumpHold;
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
             
@@ -163,6 +168,7 @@ public class PlayerController : MonoBehaviour
             else if (_jumpHoldTimer <= 0 && _rb.velocity.y < 0)
             {
                 _isJumping = false;
+                _anim.SetBool("Jumping", false);
             }
         }
         
@@ -170,6 +176,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonUp("Jump"))
         {
             _isJumping = false;
+            _anim.SetBool("Jumping", false);
             _coyoteTimer = 0f;
         }
     }
@@ -183,6 +190,8 @@ public class PlayerController : MonoBehaviour
         float moveDirection = Input.GetAxisRaw("Horizontal");
         //Debug.Log(moveDirection);
         _rb.velocity = new Vector2(moveDirection * _moveSpeed, _rb.velocity.y);
+        
+        _anim.SetFloat("HorizontalSpeed", Mathf.Abs(moveDirection));
         
         // Changes gravity based on if the character is falling or jumping.
         _rb.gravityScale = _isJumping ? _jumpGravScale : _fallGravScale;
