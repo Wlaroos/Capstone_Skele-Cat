@@ -11245,7 +11245,7 @@ MonoBehaviour:
   _bloodAmount: 300
   _bloodDecrement: 100
   _hudTimerText: {fileID: 308810458}
-  _maxTimerCount: 10
+  _maxTimerCount: 30
 --- !u!50 &904303000
 Rigidbody2D:
   serializedVersion: 4
