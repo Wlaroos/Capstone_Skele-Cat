@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ParticleSystem _boneParticle;
     [SerializeField] int _bloodAmount = 300;
     [SerializeField] int _bloodDecrement = 100;
+    private ParticleSystem _floatingParticle;
     
     // OTHER VARS
     private Rigidbody2D _rb;
@@ -77,6 +78,7 @@ public class PlayerController : MonoBehaviour
         _extraJumps = _maxExtraJumps;
         _playerSpawn = transform.position;
         _particleHolder = GameObject.Find("ParticleHolder");
+        _floatingParticle = transform.GetChild(3).GetComponent<ParticleSystem>();
 
         _hud = FindObjectOfType<HUDMenu>();
     }
@@ -325,6 +327,7 @@ public class PlayerController : MonoBehaviour
     public void Explode()
     { 
         _isAlive = false;
+        _floatingParticle.gameObject.SetActive(false);
         //_musicRef.PlaySound(_floatSFX);
         //GetComponentInChildren<ParticleSystem>().Stop();
         //GetComponent<CharacterAnimations>().setIsAlive(false);
@@ -367,7 +370,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             transform.position = _playerSpawn;
-            DelayHelper.DelayAction(this, Respawn, 2f);
+            Invoke(nameof(Respawn), 2f);
         }
     }
     
@@ -376,6 +379,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Respawned");
         _isAlive = true;
         _cc.enabled = true;
+        _floatingParticle.gameObject.SetActive(true);
         //GetComponent<CharacterAnimations>().setIsAlive(true);
         //GetComponentInChildren<ParticleSystem>().Play();
         //_rb.gravityScale = 1;
@@ -383,6 +387,22 @@ public class PlayerController : MonoBehaviour
         GetComponent<SpriteRenderer>().enabled = true;
 
         _hud.PlayerRespawned();
+    }
+    
+    public void NextLevel()
+    {
+        _isAlive = false;
+        //_musicRef.PlaySound(_floatSFX);
+        _floatingParticle.gameObject.SetActive(false);
+        //GetComponent<CharacterAnimations>().setIsAlive(false);
+        _rb.velocity = new Vector3(0, 0, 0);
+        _rb.gravityScale = 0;
+        float timer = .75f;
+        while (timer >= 0)
+        {
+            timer -= Time.deltaTime;
+            _rb.AddForce(new Vector2(0, 50 * Time.deltaTime));
+        }
     }
 
     private void Kill()
