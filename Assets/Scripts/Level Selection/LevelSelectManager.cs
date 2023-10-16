@@ -39,8 +39,9 @@ public class LevelSelectManager : MonoBehaviour
         _buttonList.Clear();
         _vLayoutList.Clear();
         
+        // Make i The Index of the Builds to Start At
         int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;     
-        for( int i = 1; i < sceneCount; i++ )
+        for( int i = 2; i < sceneCount; i++ )
         {
             _scenes.Add(System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility
                 .GetScenePathByBuildIndex(i)));
@@ -51,41 +52,30 @@ public class LevelSelectManager : MonoBehaviour
 
     private void Init()
     {
-        Debug.Log(_scenes.Count + "--" + _levelsPerStage);
-        Debug.Log(Mathf.Ceil((float)_scenes.Count / (float)_levelsPerStage));
+        int num = 0;
+
         for (int i = 1; i < (Mathf.Ceil((float)_scenes.Count / (float)_levelsPerStage)) + 1; i++)
         {
+
             GameObject _stage = Instantiate(_verticalLayoutPrefab, transform.position, Quaternion.identity,
                 transform);
             _stage.GetComponentInChildren<TMP_Text>().text = ("[ " + i + " ]");
             _vLayoutList.Add(_stage);
 
-            if (_scenes.Count < _levelsPerStage)
+            for (int j = 0; j < _levelsPerStage; j++)
             {
-                for (int j = 1; j < _scenes.Count + 1; j++)
-                {
+                GameObject _button = Instantiate(_buttonPrefab, transform.position, Quaternion.identity,
+                    _stage.transform);
 
-                    GameObject _button = Instantiate(_buttonPrefab, transform.position, Quaternion.identity,
-                        _stage.transform);
-                    _button.GetComponent<LevelSelectButton>().LevelNumber = (i + "-" + j);
-                    _button.GetComponent<LevelSelectButton>().Init();
-                    _buttonList.Add(_button);
+                if (num < _scenes.Count) _button.GetComponent<LevelSelectButton>().LevelNumber = (_scenes[num]);
+                else _button.GetComponent<LevelSelectButton>().LevelNumber = ("N/A");
 
-                }
+                _button.GetComponent<LevelSelectButton>().Init();
+                _buttonList.Add(_button);
+
+                num++;
             }
-            else
-            {
-                for (int j = 1; j < _levelsPerStage + 1; j++)
-                {
 
-                    GameObject _button = Instantiate(_buttonPrefab, transform.position, Quaternion.identity,
-                        _stage.transform);
-                    _button.GetComponent<LevelSelectButton>().LevelNumber = (i + "-" + j);
-                    _button.GetComponent<LevelSelectButton>().Init();
-                    _buttonList.Add(_button);
-
-                }
-            }
         }
     }
 }
