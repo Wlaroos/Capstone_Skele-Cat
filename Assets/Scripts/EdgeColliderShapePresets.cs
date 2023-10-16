@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class EdgeColliderShapePresets : MonoBehaviour
@@ -120,5 +117,5 @@ public class EdgeColliderShapePresets : MonoBehaviour
         _pointList.Add(_pointList[0]);
         _ec.SetPoints(_pointList);
     }
-}
 #endif
+}
