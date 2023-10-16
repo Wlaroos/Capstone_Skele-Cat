@@ -51,8 +51,9 @@ public class LevelSelectButton : MonoBehaviour
         }
     }
 
+    // Make it a double click? One to view, then one to actually go?
     public void GotoLevel()
     {
-        //if(_levelIndex != -1) {SceneManager.LoadScene(_levelIndex);}
+        if(_levelIndex != -1) {SceneManager.LoadScene(_levelIndex);}
     }
 }
