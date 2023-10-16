@@ -47,23 +47,21 @@ public class PlayerController : MonoBehaviour
     //
     private Vector2 _slopeNormalPerp;
     
-    [Header("Blood")]
+    [Header("Particles")]
     [SerializeField] ParticleSystem _bloodParticle;
+    [SerializeField] ParticleSystem _boneParticle;
     [SerializeField] int _bloodAmount = 300;
     [SerializeField] int _bloodDecrement = 100;
-    
-    [Header("Timer")]
-    [SerializeField] Text _hudTimerText;
-    [SerializeField] private int _maxTimerCount = 10; 
-    private int _timerCount = 10;
-    private float _timeRemaining = 1;
     
     // OTHER VARS
     private Rigidbody2D _rb;
     private CapsuleCollider2D _cc;
     private Animator _anim;
+    private HUDMenu _hud;
     //
     private bool _isAlive = true;
+    public bool IsAlive { get => _isAlive;}
+    
     bool _facingRight = true;
     //
     private Vector3 _playerSpawn;
@@ -77,9 +75,10 @@ public class PlayerController : MonoBehaviour
         _anim = GetComponent<Animator>();
         _groundCheck = transform.GetChild(0).transform;
         _extraJumps = _maxExtraJumps;
-        _timerCount = _maxTimerCount;
         _playerSpawn = transform.position;
         _particleHolder = GameObject.Find("ParticleHolder");
+
+        _hud = FindObjectOfType<HUDMenu>();
     }
 
     private void Update()
@@ -88,7 +87,6 @@ public class PlayerController : MonoBehaviour
         Move();
         Jump();
         SlopeCheck();
-        Timer();
         
         // Right click to blow up, can be done during the tutorial.
         if (Input.GetButtonDown("Explode"))
@@ -356,47 +354,26 @@ public class PlayerController : MonoBehaviour
     
         private void StateChange()
     {
-        transform.position = _playerSpawn;
         _rb.velocity = new Vector3(0,0,0);
         _rb.gravityScale = 0;
         GetComponent<SpriteRenderer>().enabled = false;
         _bloodAmount -= _bloodDecrement;
-        
-        FindObjectOfType<HUDMenu>().hp--;
-        DelayHelper.DelayAction(this, Respawn, 2f);
-    }
-    
-    private void Timer()
-    {
-        // Timer decrement
-        if (_timerCount >= 1 && _isAlive == true)
-        {
-            _timeRemaining -= Time.deltaTime;
-        }
+        _hud.ChangeHealth(-1);
 
-        // Timer runs out, player explodes
-        else if (_timerCount < 1 && _isAlive == true)
+        if (_hud.CurrentHealth <= 0)
         {
-            //_musicRef.PlaySound(_tickHighSFX);
-            Explode();
+            Kill();
         }
-        // Reset the timer and update the timer text (timeRemaining counts for 1 second, timerCount is how many seconds)
-        if (_timeRemaining <= 0)
+        else
         {
-            _timeRemaining = 1;
-            _timerCount--;
-            _hudTimerText.text = ("" + ((Mathf.Round(_timeRemaining) + _timerCount - 1)));
-            // Tick sound effect and camera shake if timer isn't on the last second
-            if (_timerCount >= 1)
-            { 
-                //_musicRef.PlaySound(_tickSFX);
-                // shake.CamShake();
-            }
+            transform.position = _playerSpawn;
+            DelayHelper.DelayAction(this, Respawn, 2f);
         }
     }
     
     private void Respawn()
     {
+        Debug.Log("Respawned");
         _isAlive = true;
         _cc.enabled = true;
         //GetComponent<CharacterAnimations>().setIsAlive(true);
@@ -404,12 +381,14 @@ public class PlayerController : MonoBehaviour
         //_rb.gravityScale = 1;
         //GetComponent<SpriteRenderer>().color = Color.white;
         GetComponent<SpriteRenderer>().enabled = true;
-        _timerCount = _maxTimerCount;
-        _hudTimerText.text = ("" + ((Mathf.Round(_timeRemaining) + _timerCount - 1)));
+
+        _hud.PlayerRespawned();
     }
 
     private void Kill()
     {
+        Debug.Log("Dead");
+        Instantiate(_boneParticle, transform.position, Quaternion.Euler(90,0,0));
         // Unhides the canvas UI
         //GameObject.Find("CanvasMenu").GetComponent<CanvasMenu>().PlayerDeath();
         //_musicRef.PlaySound(_deathSFX);

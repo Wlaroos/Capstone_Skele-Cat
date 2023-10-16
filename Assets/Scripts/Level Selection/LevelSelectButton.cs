@@ -10,8 +10,7 @@ using UnityEditor;
 public class LevelSelectButton : MonoBehaviour
 {
     [SerializeField] string _levelNumber;
-    public string LevelNumber { get => _levelNumber; set => _levelNumber = value;
-    }
+    public string LevelNumber { get => _levelNumber; set => _levelNumber = value; }
 
     [SerializeField] string _levelName;
     public string LevelName { get => _levelName;}
