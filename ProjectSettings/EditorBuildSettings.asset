@@ -10,32 +10,14 @@ EditorBuildSettings:
     guid: 2a314b93224937045a426acae65ca0f4
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
     guid: 6b223032f77b16d4b9566fe5700999f1
   - enabled: 1
+    path: Assets/Scenes/1-1.unity
+    guid: 86fa7ce97ef1599448074673f014bffd
+  - enabled: 1
     path: Assets/Scenes/1-2.unity
-    guid: 11d8a6619f52eb648bcb25f9563eba4d
+    guid: 2ba537f144bd1ff43ad8447fa730fd3b
   - enabled: 1
     path: Assets/Scenes/1-3.unity
-    guid: 48ff633c4aa5dbe4ab8d66583adfe93a
-  - enabled: 1
-    path: Assets/Scenes/1-4.unity
-    guid: 962cdfba58167aa4c9c71df34fbb57d5
-  - enabled: 1
-    path: Assets/Scenes/1-5.unity
-    guid: f6c21113e9460ef489e6560f428c3906
-  - enabled: 1
-    path: Assets/Scenes/1-6.unity
-    guid: 18e0cb54f50469142861aed82395fadd
-  - enabled: 1
-    path: Assets/Scenes/1-7.unity
-    guid: 3e5ce83dce125204e89b9eb79f630fba
-  - enabled: 1
-    path: Assets/Scenes/1-87.unity
-    guid: 9b17ff7919e50594484a32ba332d8055
-  - enabled: 1
-    path: Assets/Scenes/lmao.unity
-    guid: 704b50dbd81c05940895dacd31d3f13a
+    guid: 2b5e2bac624d97244a1cdac75623bc9d
   m_configObjects: {}

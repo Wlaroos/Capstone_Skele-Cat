@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,6 +29,11 @@ public class HUDMenu : MonoBehaviour
         
         _timerCount = _maxTimerCount;
         _currentHealth = _maxHealth;
+    }
+
+    private void Start()
+    {
+        _levelName.text = ("Level: " + SceneManager.GetActiveScene().name);
     }
 
     private void Update()

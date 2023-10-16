@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
         Jump();
         SlopeCheck();
         
-        // Right click to blow up, can be done during the tutorial.
+        // Right click to blow up
         if (Input.GetButtonDown("Explode"))
         {
             Explode();
@@ -335,7 +335,7 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = new Vector2(0, 1f);
         _cc.enabled = false;
         
-       Invoke(nameof(ExplodeDelay), .75f);
+        Invoke("ExplodeDelay", .75f);
     }
     
     private void ExplodeDelay()
