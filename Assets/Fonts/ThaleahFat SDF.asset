@@ -75,19 +75,19 @@ MonoBehaviour:
     m_PointSize: 202
     m_Scale: 1
     m_UnitsPerEM: 1024
-    m_LineHeight: 203.1836
-    m_AscentLine: 134.53516
+    m_LineHeight: 200
+    m_AscentLine: 135
     m_CapLine: 89
     m_MeanLine: 89
     m_Baseline: 0
-    m_DescentLine: -50.5
-    m_SuperscriptOffset: 134.53516
+    m_DescentLine: -50
+    m_SuperscriptOffset: 135
     m_SuperscriptSize: 0.5
-    m_SubscriptOffset: -50.5
+    m_SubscriptOffset: -50
     m_SubscriptSize: 0.5
-    m_UnderlineOffset: -30.18164
-    m_UnderlineThickness: 10.060547
-    m_StrikethroughOffset: 35.6
+    m_UnderlineOffset: -30
+    m_UnderlineThickness: 10
+    m_StrikethroughOffset: 35
     m_StrikethroughThickness: 10.060547
     m_TabWidth: 63
   m_GlyphTable:
@@ -2584,7 +2584,7 @@ Material:
     - _UnderlayOffsetX: 0
     - _UnderlayOffsetY: 0
     - _UnderlaySoftness: 0
-    - _VertexOffsetX: 0
+    - _VertexOffsetX: 1.5
     - _VertexOffsetY: 0
     - _WeightBold: 0.75
     - _WeightNormal: 0
