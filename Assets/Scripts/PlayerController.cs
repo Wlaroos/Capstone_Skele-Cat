@@ -335,7 +335,7 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = new Vector2(0, 1f);
         _cc.enabled = false;
         
-        this.DelayAction(ExplodeDelay, .75f);
+       Invoke(nameof(ExplodeDelay), .75f);
     }
     
     private void ExplodeDelay()
