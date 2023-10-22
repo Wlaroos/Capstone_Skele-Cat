@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPrefsManager : MonoBehaviour
+public class SettingsManager : MonoBehaviour
 {
-    public static PlayerPrefsManager Instance { get; set; }
+    public static SettingsManager Instance { get; set; }
     
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
         }
         else
         {

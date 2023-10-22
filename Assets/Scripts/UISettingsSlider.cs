@@ -50,7 +50,7 @@ public class UISettingsSlider : MonoBehaviour
         PlayerPrefs.SetFloat(_keyName.text, value);
         
         string methodName = _keyName.text.Replace(" ", "_");
-        PlayerPrefsManager.Instance.Invoke(methodName, 0);
+        SettingsManager.Instance.Invoke(methodName, 0);
         
         _sliderText.text = _slider.value.ToString();
     }

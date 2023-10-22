@@ -137,6 +137,8 @@ public class PlayerController : MonoBehaviour
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
                 _extraJumps -= 1;
                 _jumpInputBufferTimer = 0;
+                
+                WinZone.Instance.IncrementJumps();
             }
             _jumpInputBufferTimer = _maxJumpInputBuffer;
         }
@@ -155,6 +157,8 @@ public class PlayerController : MonoBehaviour
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
             
             _jumpInputBufferTimer = 0;
+            
+            WinZone.Instance.IncrementJumps();
         }
         
         // Increased jump height while holding the button down
@@ -412,5 +416,10 @@ public class PlayerController : MonoBehaviour
         // Unhides the canvas UI
         //GameObject.Find("CanvasMenu").GetComponent<CanvasMenu>().PlayerDeath();
         //_musicRef.PlaySound(_deathSFX);
+    }
+
+    public int GetLivesLeft()
+    { 
+        return _hud.CurrentHealth;
     }
 }

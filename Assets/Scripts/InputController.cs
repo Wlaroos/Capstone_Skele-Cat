@@ -13,7 +13,6 @@ public class InputController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
         }
         else
         {
@@ -40,6 +39,12 @@ public class InputController : MonoBehaviour
         if (Input.GetButtonDown("RestartLevel"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        
+        // Will be button in settings as well
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            SaveData.Instance.ClearJson();
         }
     }
 }
