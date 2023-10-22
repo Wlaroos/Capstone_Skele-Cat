@@ -21,6 +21,8 @@ public class LevelSelectButton : MonoBehaviour
     private Button _button;
     private TMP_Text _buttonText;
 
+    public LevelSelectManager Manager;
+
     private void Awake()
     {
         _button = GetComponent<Button>();
@@ -55,5 +57,21 @@ public class LevelSelectButton : MonoBehaviour
     public void GotoLevel()
     {
         if(_levelIndex != -1) {SceneManager.LoadScene(_levelIndex);}
+    }
+
+    public void Hover()
+    {
+        if (_button.IsInteractable())
+        {
+            Manager.ShowLevelData(_levelIndex - 2);
+        }
+    }
+    
+    public void UnHover()
+    {
+        if (_button.IsInteractable())
+        {
+            Manager.ShowDefaultData();
+        }
     }
 }

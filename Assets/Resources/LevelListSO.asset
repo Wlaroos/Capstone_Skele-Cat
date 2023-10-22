@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64352dff4dd80a64ab9f2e1bc5d6d8c3, type: 3}
+  m_Name: LevelListSO
+  m_EditorClassIdentifier: 
+  _levelNameList:
+  - _levelName: Tutorial 01
+    _levelDescription: Teaches player about
+  - _levelName: Level 02
+    _levelDescription: Teaches player about
+  - _levelName: TESTING
+    _levelDescription: Teaches player about

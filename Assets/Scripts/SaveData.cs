@@ -89,11 +89,13 @@ public class SaveData : MonoBehaviour
         {
             Levels lev = new Levels();
             lev._levelIndex = i;
-            lev._levelName = NameFromIndex(i);
+            lev._levelNumber = NameFromIndex(i);
+            lev._levelName = "LEVEL NAME";
             lev._isCompleted = false;
             lev._clearTime = -1;
             lev._jumpsUsed = -1;
             lev._livesLeft = -1;
+            lev._rank = "N/A";
             _levelData._levels.Add(lev);
         }
     }
@@ -118,6 +120,7 @@ public class LevelData
 public class Levels
 {
     public int _levelIndex;
+    public string _levelNumber;
     public string _levelName;
     
     public bool _isCompleted;
@@ -125,4 +128,6 @@ public class Levels
     public float _clearTime;
     public int _jumpsUsed;
     public int _livesLeft;
+
+    public string _rank;
 }

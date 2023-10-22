@@ -80,13 +80,19 @@ public class WinZone : MonoBehaviour
         }
 
         // Currently only updates data if the clear time was better than the previous one.
-        if (_levelClearTime < SaveData.Instance._levelData._levels[buildIndex]._clearTime)
+        if (SaveData.Instance._levelData._levels[buildIndex]._clearTime == -1f)
         {
             SaveData.Instance._levelData._levels[buildIndex]._clearTime = _levelClearTime;
             SaveData.Instance._levelData._levels[buildIndex]._jumpsUsed = _levelJumpsUsed;
             SaveData.Instance._levelData._levels[buildIndex]._livesLeft = _levelLivesLeft;
         }
-        
+        else if (_levelClearTime < SaveData.Instance._levelData._levels[buildIndex]._clearTime)
+        {
+            SaveData.Instance._levelData._levels[buildIndex]._clearTime = _levelClearTime;
+            SaveData.Instance._levelData._levels[buildIndex]._jumpsUsed = _levelJumpsUsed;
+            SaveData.Instance._levelData._levels[buildIndex]._livesLeft = _levelLivesLeft;
+        }
+
         SaveData.Instance.SaveToJson();
     }
 }
