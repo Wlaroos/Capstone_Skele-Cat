@@ -54,7 +54,7 @@ public class SaveData : MonoBehaviour
         string levelData = JsonUtility.ToJson(_levelData);
         Debug.Log(_filePath);
         System.IO.File.WriteAllText(_filePath, levelData);
-        Debug.Log("SAVED DATA");
+        //Debug.Log("SAVED DATA");
     }
 
     public void LoadFromJson()
@@ -62,7 +62,7 @@ public class SaveData : MonoBehaviour
         string levelData = System.IO.File.ReadAllText(_filePath);
 
         _levelData = JsonUtility.FromJson<LevelData>(levelData);
-        Debug.Log("LOADED DATA");
+        //Debug.Log("LOADED DATA");
     }
 
     public void ClearJson()
@@ -70,11 +70,11 @@ public class SaveData : MonoBehaviour
         // check if file exists
         if ( !File.Exists( _filePath ) )
         {
-            Debug.Log( "No save file exists");
+            //Debug.Log( "No save file exists");
         }
         else
         {
-            Debug.Log("File exists, deleting...");
+            //Debug.Log("File exists, deleting...");
 			
             File.Delete( _filePath );
             

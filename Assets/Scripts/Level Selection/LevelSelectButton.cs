@@ -42,12 +42,12 @@ public class LevelSelectButton : MonoBehaviour
         
         if (SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/" + _levelNumber + ".unity") != -1)
         {
-            Debug.Log("Scene Found");
+            //Debug.Log("Scene Found");
             _levelIndex = SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/" + _levelNumber + ".unity");
         }
         else
         {
-            Debug.Log("Scene NOT Found");
+            //Debug.Log("Scene NOT Found");
             _button.interactable = false;
             _levelIndex = -1;
         }

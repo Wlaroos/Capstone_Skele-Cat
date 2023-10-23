@@ -20,11 +20,11 @@ public class SettingsManager : MonoBehaviour
 
     private void Music_Volume()
     {
-        Debug.Log("MUSIC VOLUME: " + PlayerPrefs.GetFloat("Music Volume"));
+        //Debug.Log("MUSIC VOLUME: " + PlayerPrefs.GetFloat("Music Volume"));
     }
     
     public void SFX_Volume()
     {
-        Debug.Log("SFX VOLUME: " + PlayerPrefs.GetFloat("SFX Volume"));
+        //Debug.Log("SFX VOLUME: " + PlayerPrefs.GetFloat("SFX Volume"));
     }
 }
