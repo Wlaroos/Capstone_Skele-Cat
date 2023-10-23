@@ -414,7 +414,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Dead");
         Instantiate(_boneParticle, transform.position, Quaternion.Euler(90,0,0));
         // Unhides the canvas UI
-        //GameObject.Find("CanvasMenu").GetComponent<CanvasMenu>().PlayerDeath();
+        GameObject.Find("DeathCanvas").GetComponent<DeathMenu>().ShowDeathMenu();
         //_musicRef.PlaySound(_deathSFX);
     }
 

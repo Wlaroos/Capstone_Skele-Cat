@@ -23,7 +23,7 @@ public class PauseMenu : MonoBehaviour
     
     [SerializeField] private Button _pauseReturnButton;
     [SerializeField] private Button _pauseRestartButton;
-    [SerializeField] private Button _pauseExitButton;
+    [SerializeField] private Button _pauseMainMenuButton;
     
     [SerializeField] private Button _clearDataConfirmButton;
 
@@ -32,16 +32,16 @@ public class PauseMenu : MonoBehaviour
     private void OnEnable()
     {
         _pauseReturnButton.onClick.AddListener(PauseReturnButton);
-        _pauseRestartButton.onClick.AddListener(PauseRestartButton);
-        _pauseExitButton.onClick.AddListener(PauseExitButton);
-        _clearDataConfirmButton.onClick.AddListener(ClearDataButton);
+        _pauseRestartButton.onClick.AddListener(InputController.Instance.RestartLevel);
+        _pauseMainMenuButton.onClick.AddListener(InputController.Instance.MainMenu);
+        _clearDataConfirmButton.onClick.AddListener(InputController.Instance.ClearData);
     }
     private void OnDisable()
     {
         _pauseReturnButton.onClick.RemoveListener(PauseReturnButton);
-        _pauseRestartButton.onClick.RemoveListener(PauseRestartButton);
-        _pauseExitButton.onClick.RemoveListener(PauseExitButton);
-        _clearDataConfirmButton.onClick.RemoveListener(ClearDataButton);
+        _pauseRestartButton.onClick.RemoveListener(InputController.Instance.RestartLevel);
+        _pauseMainMenuButton.onClick.RemoveListener(InputController.Instance.MainMenu);
+        _clearDataConfirmButton.onClick.RemoveListener(InputController.Instance.ClearData);
         Time.timeScale = 1;
     }
 
@@ -82,21 +82,6 @@ public class PauseMenu : MonoBehaviour
         HideAll();
     }
     
-    public void PauseRestartButton()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    
-    public void PauseExitButton()
-    {
-        SceneManager.LoadScene(0);
-    }
-
-    public void ClearDataButton()
-    {
-        SaveData.Instance.ClearJson();
-    }
-
     private void ShowPauseMenu()
     {
         _isVisible = true;

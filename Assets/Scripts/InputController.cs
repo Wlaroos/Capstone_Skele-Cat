@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class InputController : MonoBehaviour
 {
-    private static InputController Instance { get; set; }
+    public static InputController Instance { get; set; }
     
     private void Awake()
     {
@@ -24,21 +24,21 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetButtonDown ("CycleLevelPos") && SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            NextLevel();
         }
         else if (Input.GetButtonDown ("CycleLevelNeg") && SceneManager.GetActiveScene().buildIndex - 1 >= 0)
         {
-            SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex - 1);
+            PreviousLevel();
         }
         
         if (Input.GetButtonDown("ExitGame") && SceneManager.GetActiveScene().buildIndex < 2)
         {
-            Application.Quit();
+            QuitGame();
         }
         
         if (Input.GetButtonDown("RestartLevel"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            RestartLevel();
         }
         
         // Will be button in settings as well
@@ -46,5 +46,35 @@ public class InputController : MonoBehaviour
         {
             SaveData.Instance.ClearJson();
         }
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    
+    public void PreviousLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ClearData()
+    {
+        SaveData.Instance.ClearJson();
     }
 }

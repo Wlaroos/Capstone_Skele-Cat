@@ -8,26 +8,16 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button _startButton;
-    [SerializeField] private Button _exitButton;
+    [SerializeField] private Button _quitButton;
 
     private void OnEnable()
     {
-        _startButton.onClick.AddListener(StartButton);
-        _exitButton.onClick.AddListener(ExitButton);
+        _startButton.onClick.AddListener(InputController.Instance.NextLevel);
+        _quitButton.onClick.AddListener(InputController.Instance.QuitGame);
     }
     private void OnDisable()
     {
-        _startButton.onClick.RemoveListener(StartButton);
-        _exitButton.onClick.RemoveListener(ExitButton);
-    }
-    
-    public void StartButton()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-    
-    public void ExitButton()
-    {
-        Application.Quit();
+        _startButton.onClick.RemoveListener(InputController.Instance.NextLevel);
+        _quitButton.onClick.RemoveListener(InputController.Instance.QuitGame);
     }
 }
