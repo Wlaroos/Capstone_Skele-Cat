@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class SaveData : MonoBehaviour
@@ -11,6 +12,8 @@ public class SaveData : MonoBehaviour
     private List<String> _scenes = new List<String>();
 
     private string _filePath;
+    
+    public UnityEvent _jsonEvent = new UnityEvent();
     
     public static SaveData Instance { get; set; }
     
@@ -55,6 +58,8 @@ public class SaveData : MonoBehaviour
         Debug.Log(_filePath);
         System.IO.File.WriteAllText(_filePath, levelData);
         //Debug.Log("SAVED DATA");
+        
+        _jsonEvent.Invoke();
     }
 
     public void LoadFromJson()
@@ -63,6 +68,8 @@ public class SaveData : MonoBehaviour
 
         _levelData = JsonUtility.FromJson<LevelData>(levelData);
         //Debug.Log("LOADED DATA");
+        
+        _jsonEvent.Invoke();
     }
 
     public void ClearJson()
@@ -81,6 +88,8 @@ public class SaveData : MonoBehaviour
             _levelData._levels.Clear();
             Init();
         }
+        
+        _jsonEvent.Invoke();
     }
 
     private void Init()

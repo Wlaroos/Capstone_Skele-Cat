@@ -24,6 +24,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Button _pauseReturnButton;
     [SerializeField] private Button _pauseRestartButton;
     [SerializeField] private Button _pauseExitButton;
+    
+    [SerializeField] private Button _clearDataConfirmButton;
 
     private bool _isVisible = false;
 
@@ -32,12 +34,14 @@ public class PauseMenu : MonoBehaviour
         _pauseReturnButton.onClick.AddListener(PauseReturnButton);
         _pauseRestartButton.onClick.AddListener(PauseRestartButton);
         _pauseExitButton.onClick.AddListener(PauseExitButton);
+        _clearDataConfirmButton.onClick.AddListener(ClearDataButton);
     }
     private void OnDisable()
     {
         _pauseReturnButton.onClick.RemoveListener(PauseReturnButton);
         _pauseRestartButton.onClick.RemoveListener(PauseRestartButton);
         _pauseExitButton.onClick.RemoveListener(PauseExitButton);
+        _clearDataConfirmButton.onClick.RemoveListener(ClearDataButton);
         Time.timeScale = 1;
     }
 
@@ -86,6 +90,11 @@ public class PauseMenu : MonoBehaviour
     public void PauseExitButton()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void ClearDataButton()
+    {
+        SaveData.Instance.ClearJson();
     }
 
     private void ShowPauseMenu()

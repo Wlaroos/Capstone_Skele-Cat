@@ -39,9 +39,16 @@ public class LevelSelectManager : MonoBehaviour
         _horizontalLayout = GetComponent<HorizontalLayoutGroup>();
         _levelList = (LevelList)Resources.Load("LevelListSO");
     }
+    
+    private void OnDisable()
+    {
+        SaveData.Instance._jsonEvent.RemoveListener(Refresh);
+    }
 
     private void Start()
     {
+        SaveData.Instance._jsonEvent.AddListener(Refresh);
+        
         foreach (Transform child in transform)
         {
             DestroyImmediate(child.gameObject);
@@ -61,6 +68,15 @@ public class LevelSelectManager : MonoBehaviour
         Init();
     }
 
+    private void Refresh()
+    {
+        foreach (var button in _buttonList)
+        {
+            LevelSelectButton _lsb = button.GetComponent<LevelSelectButton>();
+            _lsb.Init();
+        }
+    }
+    
     private void Init()
     {
         int num = 0;
@@ -77,12 +93,14 @@ public class LevelSelectManager : MonoBehaviour
             for (int j = 0; j < _levelsPerStage; j++)
             {
                 GameObject _button = Instantiate(_buttonPrefab, transform.position, Quaternion.identity, _stage.transform);
+                
+                LevelSelectButton _lsb = _button.GetComponent<LevelSelectButton>();
 
-                if (num < _scenes.Count) _button.GetComponent<LevelSelectButton>().LevelNumber = (_scenes[num]);
-                else _button.GetComponent<LevelSelectButton>().LevelNumber = ("N/A");
+                if (num < _scenes.Count) _lsb.LevelNumber = (_scenes[num]);
+                else _lsb.LevelNumber = ("N/A");
 
-                _button.GetComponent<LevelSelectButton>().Init();
-                _button.GetComponent<LevelSelectButton>().Manager = this;
+                _lsb.Init();
+                _lsb.Manager = this;
                 _buttonList.Add(_button);
 
                 num++;
