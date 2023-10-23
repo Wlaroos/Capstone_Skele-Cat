@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 86917
+  controlID: 89708
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 86918
+  controlID: 89671
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 86919
+  controlID: 89611
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -673,9 +673,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 7.974874, y: 1.3787129, z: -0.12918073}
+    m_Target: {x: -7.695471, y: -3.6636026, z: 0.013621205}
     speed: 2
-    m_Value: {x: 7.974874, y: 1.3787129, z: -0.12918073}
+    m_Value: {x: -7.695471, y: -3.6636026, z: 0.013621205}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -725,9 +725,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 17.28484
+    m_Target: 3.0046475
     speed: 2
-    m_Value: 17.28484
+    m_Value: 3.0046475
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -825,14 +825,14 @@ MonoBehaviour:
     - {fileID: -8056276280424248802, guid: a73dcfebd04f48c43a631a2474a99b24, type: 2}
     - {fileID: 5064422079454040138, guid: eae2e52c7c458a343b04d2dc84b6ed15, type: 2}
     m_ValueSerializationHelper:
-    - e00: 0.27774608
+    - e00: 0.7782089
       e01: 0
       e02: 0
-      e03: 252.43599
+      e03: 269.69885
       e10: 0
-      e11: 0.27774608
+      e11: 0.7782089
       e12: 0
-      e13: 227.55005
+      e13: 149.37973
       e20: 0
       e21: 0
       e22: 1
@@ -897,7 +897,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 86976
+  controlID: 89672
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -917,8 +917,8 @@ MonoBehaviour:
     y: 0
     width: 1021
     height: 378
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -969,7 +969,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Prefabs/Particles/Blood
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -977,16 +977,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Prefabs/Particles/Blood
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Unity\Projects\Capstone_Skele-Cat
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 3}
-    m_SelectedIDs: 0a720000
-    m_LastClickedID: 29194
-    m_ExpandedIDs: 00000000da710000dc710000de710000fe71000000ca9a3b
+    m_SelectedIDs: 14a20000
+    m_LastClickedID: 41492
+    m_ExpandedIDs: 00000000da710000dc710000de710000fe7100000472000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1041,8 +1041,8 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: c6230000
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: c6230000f4f40100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1149,8 +1149,8 @@ MonoBehaviour:
     y: 0
     width: 388
     height: 957
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
