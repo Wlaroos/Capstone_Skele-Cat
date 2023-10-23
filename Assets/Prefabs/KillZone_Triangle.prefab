@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8949951788533798276}
   - component: {fileID: 864282705264733919}
   m_Layer: 0
-  m_Name: Spikes
+  m_Name: KillZone_Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

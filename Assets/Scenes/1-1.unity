@@ -294,6 +294,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2785137529333087377, guid: e74dff5a795f2934bad30778d1d25370, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1283111650, guid: 441d40aa99d1c29428611d8a0427b2f6, type: 3}
     - target: {fileID: 4217584530967090704, guid: e74dff5a795f2934bad30778d1d25370, type: 3}
       propertyPath: m_Name
       value: HUDMenu
