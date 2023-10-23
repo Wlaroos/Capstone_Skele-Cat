@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ec20f988d30d1274fabf9427c51cf297
+guid: c2f9cf81eb36a2640a421956fef4a902
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 15
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,22 +123,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cat_Jump_0
+      name: Square_Outline_Image
       rect:
         serializedVersion: 2
-        x: 5
-        y: 5
-        width: 21
-        height: 23
-      alignment: 9
-      pivot: {x: 0.47619048, y: -0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 6, y: 6, z: 6, w: 6}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ead9808ae0e32ef4c9946802fb1652fd
-      internalID: -202874965
+      spriteID: cfefb712d7ef9ac4f9069867cfd664b9
+      internalID: -1007310970
       vertices: []
       indices: 
       edges: []
@@ -147,14 +147,14 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Cat_Jump_0: -202874965
+      Square_Outline_Image: -1007310970
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
