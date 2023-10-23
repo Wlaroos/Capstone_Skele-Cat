@@ -12,12 +12,22 @@ public class MainMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        _startButton.onClick.AddListener(InputController.Instance.NextLevel);
-        _quitButton.onClick.AddListener(InputController.Instance.QuitGame);
+        _startButton.onClick.AddListener(NextLevel);
+        _quitButton.onClick.AddListener(QuitGame);
     }
     private void OnDisable()
     {
-        _startButton.onClick.RemoveListener(InputController.Instance.NextLevel);
-        _quitButton.onClick.RemoveListener(InputController.Instance.QuitGame);
+        _startButton.onClick.RemoveListener(NextLevel);
+        _quitButton.onClick.RemoveListener(QuitGame);
+    }
+
+    private void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    
+    private void QuitGame()
+    {
+        Application.Quit();
     }
 }
