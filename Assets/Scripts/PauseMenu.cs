@@ -3,18 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
 
-    [SerializeField] private GameObject _pauseCanvas;
-    [SerializeField] private GameObject _settingsCanvas;
-    [SerializeField] private GameObject _confirmCanvas;
+    [SerializeField] private GameObject _pauseCanvasGO;
+    [SerializeField] private GameObject _settingsCanvasGO;
+    [SerializeField] private GameObject _confirmCanvasGO;
+    
+    private Canvas _pauseCanvas;
+    private Canvas _settingsCanvas;
+    private Canvas _confirmCanvas;
+    
+    private CanvasGroup _pauseCanvasGroup;
+    private CanvasGroup _settingsCanvasGroup;
+    private CanvasGroup _confirmCanvasGroup;
     
     [SerializeField] private Button _pauseReturnButton;
     [SerializeField] private Button _pauseRestartButton;
     [SerializeField] private Button _pauseExitButton;
+
+    private bool _isVisible = false;
 
     private void OnEnable()
     {
@@ -32,9 +43,18 @@ public class PauseMenu : MonoBehaviour
 
     private void Awake()
     {
-        _pauseCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
-        _settingsCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
-        _confirmCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
+        _pauseCanvas = _pauseCanvasGO.GetComponent<Canvas>();
+        _settingsCanvas = _settingsCanvasGO.GetComponent<Canvas>();
+        _confirmCanvas = _confirmCanvasGO.GetComponent<Canvas>();
+        
+        _pauseCanvasGroup = _pauseCanvasGO.GetComponent<CanvasGroup>();
+        _settingsCanvasGroup = _settingsCanvasGO.GetComponent<CanvasGroup>();
+        _confirmCanvasGroup = _confirmCanvasGO.GetComponent<CanvasGroup>();
+
+        var main = Camera.main;
+        _pauseCanvas.worldCamera = main;
+        _settingsCanvas.worldCamera = main;
+        _confirmCanvas.worldCamera = main;
     }
 
     private void Update()
@@ -42,29 +62,20 @@ public class PauseMenu : MonoBehaviour
         // Toggle Pause Menu
         if (Input.GetButtonDown("PauseGame"))
         {
-            if (_pauseCanvas.GetComponent<CanvasGroup>().interactable == false)
+            if (!_isVisible)
             {
-                _pauseCanvas.GetComponent<CanvasGroup>().alpha = 1;
-                _pauseCanvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                _pauseCanvas.GetComponent<CanvasGroup>().interactable = true;
-                Time.timeScale = 0;
+                ShowPauseMenu();
             }
             else
             {
-                _pauseCanvas.GetComponent<CanvasGroup>().alpha = 0;
-                _pauseCanvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
-                _pauseCanvas.GetComponent<CanvasGroup>().interactable = false;
-                Time.timeScale = 1;
+                HideAll();
             }
         }
     }
 
     public void PauseReturnButton()
     {
-        Time.timeScale = 1;
-        _pauseCanvas.GetComponent<CanvasGroup>().alpha = 0;
-        _pauseCanvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        _pauseCanvas.GetComponent<CanvasGroup>().interactable = false;
+        HideAll();
     }
     
     public void PauseRestartButton()
@@ -75,5 +86,43 @@ public class PauseMenu : MonoBehaviour
     public void PauseExitButton()
     {
         SceneManager.LoadScene(0);
+    }
+
+    private void ShowPauseMenu()
+    {
+        _isVisible = true;
+        
+        _pauseCanvasGroup.alpha = 1;
+        _pauseCanvasGroup.blocksRaycasts = true;
+        _pauseCanvasGroup.interactable = true;
+        
+        _settingsCanvasGroup.alpha = 0;
+        _settingsCanvasGroup.blocksRaycasts = false;
+        _settingsCanvasGroup.interactable = false;
+        
+        _confirmCanvasGroup.alpha = 0;
+        _confirmCanvasGroup.blocksRaycasts = false;
+        _confirmCanvasGroup.interactable = false;
+        
+        Time.timeScale = 0;
+    }
+    
+    private void HideAll()
+    {
+        _isVisible = false;
+        
+        Time.timeScale = 1;
+        
+        _pauseCanvasGroup.alpha = 0;
+        _pauseCanvasGroup.blocksRaycasts = false;
+        _pauseCanvasGroup.interactable = false;
+        
+        _settingsCanvasGroup.alpha = 0;
+        _settingsCanvasGroup.blocksRaycasts = false;
+        _settingsCanvasGroup.interactable = false;
+        
+        _confirmCanvasGroup.alpha = 0;
+        _confirmCanvasGroup.blocksRaycasts = false;
+        _confirmCanvasGroup.interactable = false;
     }
 }

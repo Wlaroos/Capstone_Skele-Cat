@@ -2710,9 +2710,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9580ca67a7943b044a45538d7de543ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pauseCanvas: {fileID: 837129000626564898}
-  _settingsCanvas: {fileID: 3509461241275830601}
-  _confirmCanvas: {fileID: 2496462858304645982}
+  _pauseCanvasGO: {fileID: 837129000626564898}
+  _settingsCanvasGO: {fileID: 3509461241275830601}
+  _confirmCanvasGO: {fileID: 2496462858304645982}
   _pauseReturnButton: {fileID: 562028976176694336}
   _pauseRestartButton: {fileID: 8925963773650748033}
   _pauseExitButton: {fileID: 8899690120975921146}
