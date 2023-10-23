@@ -21,10 +21,20 @@ public class UISettingsSlider : MonoBehaviour
         _slider = transform.GetChild(1).GetComponent<Slider>();
         _incButton = transform.GetChild(2).GetComponent<Button>();
         _sliderText = _slider.GetComponentInChildren<TMP_Text>();
-        
+    }
+
+    private void OnEnable()
+    {
         _decButton.onClick.AddListener(DecrementValue);
         _incButton.onClick.AddListener(IncrementValue);
         _slider.onValueChanged.AddListener(SliderValueChange);
+    }
+
+    private void OnDisable()
+    {
+        _decButton.onClick.RemoveListener(DecrementValue);
+        _incButton.onClick.RemoveListener(IncrementValue);
+        _slider.onValueChanged.RemoveListener(SliderValueChange);
     }
 
     private void Start()

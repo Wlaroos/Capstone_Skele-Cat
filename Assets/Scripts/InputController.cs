@@ -31,7 +31,7 @@ public class InputController : MonoBehaviour
             SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex - 1);
         }
         
-        if (Input.GetButtonDown("ExitGame"))
+        if (Input.GetButtonDown("ExitGame") && SceneManager.GetActiveScene().buildIndex < 2)
         {
             Application.Quit();
         }
@@ -46,5 +46,15 @@ public class InputController : MonoBehaviour
         {
             SaveData.Instance.ClearJson();
         }
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
