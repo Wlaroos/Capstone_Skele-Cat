@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     private HUDMenu _hud;
     //
     private bool _isAlive = true;
+    private bool _isSkeleton = false;
     public bool IsAlive { get => _isAlive;}
     
     bool _facingRight = true;
@@ -192,7 +193,7 @@ public class PlayerController : MonoBehaviour
     {
         // Move the player horizontally.
         float moveDirection = Input.GetAxisRaw("Horizontal");
-        //Debug.Log(moveDirection);
+        
         _rb.velocity = new Vector2(moveDirection * _moveSpeed, _rb.velocity.y);
         
         _anim.SetFloat("HorizontalSpeed", Mathf.Abs(moveDirection));
@@ -333,8 +334,6 @@ public class PlayerController : MonoBehaviour
         _isAlive = false;
         _floatingParticle.gameObject.SetActive(false);
         //_musicRef.PlaySound(_floatSFX);
-        //GetComponentInChildren<ParticleSystem>().Stop();
-        //GetComponent<CharacterAnimations>().setIsAlive(false);
         _rb.gravityScale = 0;
         _rb.velocity = new Vector2(0, 1f);
         _cc.enabled = false;
@@ -349,11 +348,6 @@ public class PlayerController : MonoBehaviour
         ParticleSystem bloodParticle = Instantiate(_bloodParticle, transform.position, Quaternion.identity , _particleHolder.transform);
         bloodParticle.GetComponent<BloodParticles>().SetParticleAmount(_bloodAmount);
         //shake.CamShakeReverse();
-        //New particles if in skeleton state
-        /*if (_currentState == _stateEnum.One)
-        {
-            ParticleSystem boneParticle = Instantiate(_boneParticle, transform.position, Quaternion.identity);
-        }*/
         StateChange();
     }
     
@@ -371,6 +365,14 @@ public class PlayerController : MonoBehaviour
         {
             Kill();
         }
+        else if(_hud.CurrentHealth == 1)
+        {
+            _isSkeleton = true;
+            _anim.SetTrigger("Skeleton");
+            
+            transform.position = _playerSpawn;
+            Invoke(nameof(Respawn), 2f);
+        }
         else
         {
             transform.position = _playerSpawn;
@@ -384,10 +386,6 @@ public class PlayerController : MonoBehaviour
         _isAlive = true;
         _cc.enabled = true;
         _floatingParticle.gameObject.SetActive(true);
-        //GetComponent<CharacterAnimations>().setIsAlive(true);
-        //GetComponentInChildren<ParticleSystem>().Play();
-        //_rb.gravityScale = 1;
-        //GetComponent<SpriteRenderer>().color = Color.white;
         GetComponent<SpriteRenderer>().enabled = true;
 
         _hud.PlayerRespawned();
@@ -414,8 +412,13 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Dead");
         Instantiate(_boneParticle, transform.position, Quaternion.Euler(90,0,0));
         // Unhides the canvas UI
-        GameObject.Find("DeathCanvas").GetComponent<DeathMenu>().ShowDeathMenu();
+        Invoke(nameof(ShowDeathCanvas), 0.75f);
         //_musicRef.PlaySound(_deathSFX);
+    }
+
+    private void ShowDeathCanvas()
+    {
+        GameObject.Find("DeathCanvas").GetComponent<DeathMenu>().ShowDeathMenu();
     }
 
     public int GetLivesLeft()
