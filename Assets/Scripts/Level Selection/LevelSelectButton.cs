@@ -104,6 +104,12 @@ public class LevelSelectButton : MonoBehaviour
                 else
                 {
                     _isUnlocked = true;
+                    cb.normalColor = Color.green;
+                    cb.highlightedColor = Color.cyan;
+                    cb.pressedColor = new Color32(0, 130, 125, 255);
+                    cb.selectedColor = new Color32(0, 130, 125, 255);
+                    cb.disabledColor = new Color32(20, 0, 0, 150);
+                    _button.colors = cb;
                 }
             }
         }
