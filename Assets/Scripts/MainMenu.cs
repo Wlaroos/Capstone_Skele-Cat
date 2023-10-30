@@ -16,9 +16,14 @@ public class MainMenu : MonoBehaviour
     {
         _startButton.onClick.AddListener(NextLevel);
         _quitButton.onClick.AddListener(QuitGame);
+    }
+
+    private void Start()
+    {
         _clearDataConfirmButton.onClick.AddListener(InputController.Instance.ClearData);
         _defaultValuesButton.onClick.AddListener(SettingsManager.Instance.DefaultValues);
     }
+
     private void OnDisable()
     {
         _startButton.onClick.RemoveListener(NextLevel);
