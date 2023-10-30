@@ -30,12 +30,7 @@ public class SettingsManager : MonoBehaviour
             DefaultValues();
         }
     }
-
-    private void Update()
-    {
-        Debug.Log(PlayerPrefs.GetFloat("Music Volume") + "---" + PlayerPrefs.GetFloat("SFX Volume") + "---" + PlayerPrefs.GetFloat("Screen Shake"));
-    }
-
+    
     public void DefaultValues()
     {
         PlayerPrefs.SetFloat("Music Volume", DefaultMusicVolume);

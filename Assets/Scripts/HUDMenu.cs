@@ -18,14 +18,18 @@ public class HUDMenu : MonoBehaviour
     private int _currentHealth;
     public int CurrentHealth { get => _currentHealth;}
     
-
     private PlayerController _playerRef;
+    private Canvas _hudCanvas;
     
     private void Awake()
     {
         _hudTimerText = transform.GetChild(0).GetComponent<TMP_Text>();
         _levelName = transform.GetChild(2).GetComponent<TMP_Text>();
         _playerRef = FindObjectOfType<PlayerController>();
+        _hudCanvas = GetComponent<Canvas>();
+        
+        var main = Camera.main;
+        _hudCanvas.worldCamera = main;
         
         _timerCount = _maxTimerCount;
         _currentHealth = _maxHealth;
