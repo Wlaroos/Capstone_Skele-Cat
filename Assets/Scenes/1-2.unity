@@ -3168,6 +3168,10 @@ PrefabInstance:
       value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 221241848114429821, guid: 1d5702ad04221b54d9a1fe21e1bc5778, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 221241848114429821, guid: 1d5702ad04221b54d9a1fe21e1bc5778, type: 3}
       propertyPath: m_DrawMode
       value: 2
       objectReference: {fileID: 0}
