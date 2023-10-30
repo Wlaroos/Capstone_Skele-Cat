@@ -15,9 +15,6 @@ public class KillZone : MonoBehaviour
     {
         PlayerController playerController = collision.GetComponent<PlayerController>();
 
-        if (playerController != null)
-        {
-            playerController.Explode();
-        }
+        playerController?.Explode();
     }
 }

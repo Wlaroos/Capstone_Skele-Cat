@@ -1,75 +1,92 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
-    [SerializeField] private float _moveSpeed = 15f;
-    
-    [Header("Gravity")]
-    [SerializeField] private float _jumpGravScale = 5f;
+    [Header("Movement")] [SerializeField] private float _moveSpeed = 15f;
+
+    [Header("Gravity")] [SerializeField] private float _jumpGravScale = 5f;
     [SerializeField] private float _fallGravScale = 15f;
-    
-    [Header("Jumping")]
-    [SerializeField] private float _jumpForce = 15;
+
+    [Header("Jumping")] [SerializeField] private float _jumpForce = 15;
     [SerializeField] private float _maxJumpHold = 0.15f;
-    [Space(10)]
-    [SerializeField] private float _maxCoyoteTime = 0.1f;
+    [Space(10)] [SerializeField] private float _maxCoyoteTime = 0.1f;
+
     [SerializeField] private float _maxJumpInputBuffer = 0.2f;
+
     //
     [SerializeField] private int _maxExtraJumps = 1;
+
     private int _extraJumps;
+
     //
     private bool _isJumping;
+
     //
     private float _jumpHoldTimer;
     private float _coyoteTimer;
     private float _jumpInputBufferTimer;
 
-    [Header("Ground Check")] 
-    [SerializeField] private Vector2 _groundCheckSize = new Vector2(4,2);
+    [Header("Ground Check")] [SerializeField]
+    private Vector2 _groundCheckSize = new Vector2(4, 2);
+
     [SerializeField] private LayerMask _groundLayer;
     private Transform _groundCheck;
-    
-    [Header("Slope Detection")]
-    [SerializeField] private float _maxSlopeAngle = 60f;
-    [SerializeField] private float _slopeCheckDistance = 0.5f; 
+
+    [Header("Slope Detection")] [SerializeField]
+    private float _maxSlopeAngle = 60f;
+
+    [SerializeField] private float _slopeCheckDistance = 0.5f;
     [SerializeField] private PhysicsMaterial2D _noFriction;
+
     [SerializeField] private PhysicsMaterial2D _fullFriction;
+
     //
     private bool _isOnSlope;
+
     private bool _canWalkOnSlope;
+
     //
     private float _slopeDownAngle;
     private float _slopeSideAngle;
+
     private float _lastSlopeAngle;
+
     //
     private Vector2 _slopeNormalPerp;
-    
-    [Header("Particles")]
-    [SerializeField] ParticleSystem _bloodParticle;
+
+    [Header("Particles")] [SerializeField] ParticleSystem _bloodParticle;
     [SerializeField] ParticleSystem _boneParticle;
     [SerializeField] int _bloodAmount = 300;
     [SerializeField] int _bloodDecrement = 100;
     private ParticleSystem _floatingParticle;
-    
+
     // OTHER VARS
     private Rigidbody2D _rb;
     private CapsuleCollider2D _cc;
     private Animator _anim;
+
     private HUDMenu _hud;
+
     //
     private bool _isAlive = true;
     private bool _isSkeleton = false;
-    public bool IsAlive { get => _isAlive;}
-    
+    private bool _canPressExplode = true;
+
+    public bool IsAlive
+    {
+        get => _isAlive;
+    }
+
     bool _facingRight = true;
+
     //
     private Vector3 _playerSpawn;
 
     private GameObject _particleHolder;
-    
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -90,26 +107,28 @@ public class PlayerController : MonoBehaviour
         Move();
         Jump();
         SlopeCheck();
-        
+
         // Right click to blow up
-        if (Input.GetButtonDown("Explode"))
+        if (Input.GetButtonDown("Explode") && _canPressExplode)
         {
             Explode();
         }
     }
-    
-    #region Ground Check 
+
+    #region Ground Check
+
     private bool IsGrounded()
     {
         // Check if the player is grounded, return result
-        Collider2D colliders = Physics2D.OverlapBox(_groundCheck.position, _groundCheckSize,0, _groundLayer );
+        Collider2D colliders = Physics2D.OverlapBox(_groundCheck.position, _groundCheckSize, 0, _groundLayer);
         _anim.SetBool("Grounded", colliders != null);
         return colliders != null;
     }
-    
+
     #endregion
 
     #region Jumping and Falling
+
     private void Jump()
     {
         // Reset coyote time and extra jumps when the player is grounded and not jumping
@@ -124,7 +143,7 @@ public class PlayerController : MonoBehaviour
         {
             _coyoteTimer -= Time.deltaTime;
         }
-        
+
         // Jump Input Resets the Jump Buffer Timer
         // (Allows the Player to Input the Jump Button a Little Early and Still Have a Successful Jump)
         if (Input.GetButtonDown("Jump"))
@@ -138,9 +157,10 @@ public class PlayerController : MonoBehaviour
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
                 _extraJumps -= 1;
                 _jumpInputBufferTimer = 0;
-                
+
                 WinZone.Instance.IncrementJumps();
             }
+
             _jumpInputBufferTimer = _maxJumpInputBuffer;
         }
         // Buffer time is always decreasing
@@ -156,12 +176,12 @@ public class PlayerController : MonoBehaviour
             _anim.SetBool("Jumping", true);
             _jumpHoldTimer = _maxJumpHold;
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
-            
+
             _jumpInputBufferTimer = 0;
-            
+
             WinZone.Instance.IncrementJumps();
         }
-        
+
         // Increased jump height while holding the button down
         if (Input.GetButton("Jump"))
         {
@@ -176,7 +196,7 @@ public class PlayerController : MonoBehaviour
                 _anim.SetBool("Jumping", false);
             }
         }
-        
+
         // Jump button is released, reset coyote time
         if (Input.GetButtonUp("Jump"))
         {
@@ -185,41 +205,43 @@ public class PlayerController : MonoBehaviour
             _coyoteTimer = 0f;
         }
     }
-    
+
     #endregion
 
     #region Movement
+
     private void Move()
     {
         // Move the player horizontally.
         float moveDirection = Input.GetAxisRaw("Horizontal");
-        
+
         _rb.velocity = new Vector2(moveDirection * _moveSpeed, _rb.velocity.y);
-        
+
         _anim.SetFloat("HorizontalSpeed", Mathf.Abs(moveDirection));
-        
+
         // Changes gravity based on if the character is falling or jumping.
         _rb.gravityScale = _isJumping ? _jumpGravScale : _fallGravScale;
-        
+
         // Makes the player fall really slowly if they are on the very edge of the platform.
         if (IsGrounded() && !_isJumping && moveDirection == 0)
         {
             _rb.gravityScale = 0f;
         }
-        
+
         // SLOPE CHECK BITCHES
         if (IsGrounded() && _isOnSlope && _canWalkOnSlope && !_isJumping) //If on slope
         {
-            _rb.velocity = new Vector2 (_moveSpeed * _slopeNormalPerp.x * -moveDirection, _moveSpeed * _slopeNormalPerp.y * -moveDirection);
+            _rb.velocity = new Vector2(_moveSpeed * _slopeNormalPerp.x * -moveDirection,
+                _moveSpeed * _slopeNormalPerp.y * -moveDirection);
         }
 
         if (_rb.velocity.y > 15)
         {
-            _rb.velocity = new Vector2( _rb.velocity.x, 15f);
+            _rb.velocity = new Vector2(_rb.velocity.x, 15f);
         }
-        
+
         // FLIP CHECKS
-        if (_rb.velocity.x > 0 && !_facingRight)  // Moving right, facing left
+        if (_rb.velocity.x > 0 && !_facingRight) // Moving right, facing left
         {
             Flip(); // Flip right
         }
@@ -227,19 +249,20 @@ public class PlayerController : MonoBehaviour
         {
             Flip(); // Flip left
         }
-        
+
     }
+
     #endregion
-    
+
     void OnDrawGizmosSelected()
     {
         // Draw a yellow cube at the transform position
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.GetChild(0).position, _groundCheckSize);
     }
-    
+
     #region Slopes
-    
+
     private void SlopeCheck()
     {
         Vector2 checkPos = transform.position - (Vector3)(new Vector2(0.0f, _cc.size.y / 2));
@@ -276,23 +299,23 @@ public class PlayerController : MonoBehaviour
     }
 
     private void SlopeCheckVertical(Vector2 checkPos)
-    {      
+    {
         RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, _slopeCheckDistance, _groundLayer);
 
         if (hit)
         {
 
-            _slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;            
+            _slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
 
             _slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-            if(_slopeDownAngle != _lastSlopeAngle)
+            if (_slopeDownAngle != _lastSlopeAngle)
             {
                 _isOnSlope = true;
-            }                       
+            }
 
             _lastSlopeAngle = _slopeDownAngle;
-           
+
             Debug.DrawRay(hit.point, _slopeNormalPerp, Color.blue);
             Debug.DrawRay(hit.point, hit.normal, Color.green);
 
@@ -316,9 +339,9 @@ public class PlayerController : MonoBehaviour
             _rb.sharedMaterial = _noFriction;
         }
     }
-    
+
     #endregion
-    
+
     private void Flip()
     {
         _facingRight = !_facingRight;
@@ -328,34 +351,35 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Explode
-    
+
     public void Explode()
-    { 
+    {
         _isAlive = false;
         _floatingParticle.gameObject.SetActive(false);
         //_musicRef.PlaySound(_floatSFX);
         _rb.gravityScale = 0;
         _rb.velocity = new Vector2(0, 1f);
         _cc.enabled = false;
-        
+
         Invoke("ExplodeDelay", .75f);
     }
-    
+
     private void ExplodeDelay()
     {
         //_musicRef.PlaySound(_explodeSFX[Random.Range(0, 2)]);
         //AudioHelper.PlayClip2D(_meowSFX, 1f);
-        ParticleSystem bloodParticle = Instantiate(_bloodParticle, transform.position, Quaternion.identity , _particleHolder.transform);
+        ParticleSystem bloodParticle = Instantiate(_bloodParticle, transform.position, Quaternion.identity,
+            _particleHolder.transform);
         bloodParticle.GetComponent<BloodParticles>().SetParticleAmount(_bloodAmount);
         CameraShake.Instance.CamShakeBig();
         StateChange();
     }
-    
+
     #endregion
-    
-        private void StateChange()
+
+    private void StateChange()
     {
-        _rb.velocity = new Vector3(0,0,0);
+        _rb.velocity = new Vector3(0, 0, 0);
         _rb.gravityScale = 0;
         GetComponent<SpriteRenderer>().enabled = false;
         _bloodAmount -= _bloodDecrement;
@@ -365,11 +389,11 @@ public class PlayerController : MonoBehaviour
         {
             Kill();
         }
-        else if(_hud.CurrentHealth == 1)
+        else if (_hud.CurrentHealth == 1)
         {
             _isSkeleton = true;
             _anim.SetTrigger("Skeleton");
-            
+
             transform.position = _playerSpawn;
             Invoke(nameof(Respawn), 2f);
         }
@@ -379,7 +403,7 @@ public class PlayerController : MonoBehaviour
             Invoke(nameof(Respawn), 2f);
         }
     }
-    
+
     private void Respawn()
     {
         //Debug.Log("Respawned");
@@ -390,7 +414,7 @@ public class PlayerController : MonoBehaviour
 
         _hud.PlayerRespawned();
     }
-    
+
     public void NextLevel()
     {
         _isAlive = false;
@@ -410,7 +434,7 @@ public class PlayerController : MonoBehaviour
     private void Kill()
     {
         Debug.Log("Dead");
-        Instantiate(_boneParticle, transform.position, Quaternion.Euler(90,0,0));
+        Instantiate(_boneParticle, transform.position, Quaternion.Euler(90, 0, 0));
         // Unhides the canvas UI
         Invoke(nameof(ShowDeathCanvas), 0.75f);
         //_musicRef.PlaySound(_deathSFX);
@@ -422,7 +446,13 @@ public class PlayerController : MonoBehaviour
     }
 
     public int GetLivesLeft()
-    { 
+    {
         return _hud.CurrentHealth;
     }
+
+    public void SetCanPressExplode(bool b)
+    {
+        _canPressExplode = b;
+    }
+
 }
