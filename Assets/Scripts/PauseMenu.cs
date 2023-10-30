@@ -26,6 +26,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Button _pauseMainMenuButton;
     
     [SerializeField] private Button _clearDataConfirmButton;
+    
+    [SerializeField] private Button _defaultValuesButton;
 
     private bool _isVisible = false;
 
@@ -35,6 +37,7 @@ public class PauseMenu : MonoBehaviour
         _pauseRestartButton.onClick.AddListener(InputController.Instance.RestartLevel);
         _pauseMainMenuButton.onClick.AddListener(InputController.Instance.MainMenu);
         _clearDataConfirmButton.onClick.AddListener(InputController.Instance.ClearData);
+        _defaultValuesButton.onClick.AddListener(SettingsManager.Instance.DefaultValues);
     }
     private void OnDisable()
     {
@@ -42,6 +45,7 @@ public class PauseMenu : MonoBehaviour
         _pauseRestartButton.onClick.RemoveListener(InputController.Instance.RestartLevel);
         _pauseMainMenuButton.onClick.RemoveListener(InputController.Instance.MainMenu);
         _clearDataConfirmButton.onClick.RemoveListener(InputController.Instance.ClearData);
+        _defaultValuesButton.onClick.RemoveListener(SettingsManager.Instance.DefaultValues);
         Time.timeScale = 1;
     }
 

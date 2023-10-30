@@ -36,7 +36,7 @@ public class WinZone : MonoBehaviour
         
         if (playerController != null && playerController.IsAlive)
         {
-            Debug.Log("Level Complete");
+            //Debug.Log("Level Complete");
             _isComplete = true;
             
             playerController.NextLevel();

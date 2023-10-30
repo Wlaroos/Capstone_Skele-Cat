@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class UISettingsSlider : MonoBehaviour
 {
     [SerializeField] TMP_Text _keyName;
-    [SerializeField] [Range(0,100)] private int _initialSliderValue = 20;
+    [SerializeField] private bool _isPercent;
+    [SerializeField] private int _maxValue;
     
     private Button _decButton;
     private Button _incButton;
@@ -21,6 +22,15 @@ public class UISettingsSlider : MonoBehaviour
         _slider = transform.GetChild(1).GetComponent<Slider>();
         _incButton = transform.GetChild(2).GetComponent<Button>();
         _sliderText = _slider.GetComponentInChildren<TMP_Text>();
+
+        _slider.maxValue = _maxValue;
+        
+        DefaultValues();
+    }
+
+    private void Start()
+    {
+        SettingsManager.Instance.ReturnDefaultValues += DefaultValues;
     }
 
     private void OnEnable()
@@ -28,7 +38,6 @@ public class UISettingsSlider : MonoBehaviour
         _decButton.onClick.AddListener(DecrementValue);
         _incButton.onClick.AddListener(IncrementValue);
         _slider.onValueChanged.AddListener(SliderValueChange);
-        SettingsManager.Instance._defaultValuesButton.onClick.AddListener(DefaultValues);
     }
 
     private void OnDisable()
@@ -36,15 +45,9 @@ public class UISettingsSlider : MonoBehaviour
         _decButton.onClick.RemoveListener(DecrementValue);
         _incButton.onClick.RemoveListener(IncrementValue);
         _slider.onValueChanged.RemoveListener(SliderValueChange);
-        SettingsManager.Instance._defaultValuesButton.onClick.RemoveListener(DefaultValues);
+        SettingsManager.Instance.ReturnDefaultValues -= DefaultValues;
     }
-
-    private void Start()
-    {
-        _slider.value = _initialSliderValue;
-        _sliderText.text = _initialSliderValue.ToString();
-    }
-
+    
     private void DecrementValue()
     {
         if(_shiftPressed) {_slider.value -= 5;}
@@ -61,15 +64,25 @@ public class UISettingsSlider : MonoBehaviour
     {
         PlayerPrefs.SetFloat(_keyName.text, value);
         
+        PlayerPrefs.Save();
+        
         string methodName = _keyName.text.Replace(" ", "_");
         SettingsManager.Instance.Invoke(methodName, 0);
-        
-        _sliderText.text = _slider.value.ToString();
+
+        UpdateText();
     }
     
     public void DefaultValues()
     {
         _slider.value = PlayerPrefs.GetFloat(_keyName.text);
+
+        UpdateText();
+    }
+
+    private void UpdateText()
+    {
+        if (!_isPercent) _sliderText.text = _slider.value.ToString();
+        else _sliderText.text = ((float)_slider.value / 10f).ToString("F1");
     }
     
     private void OnGUI()

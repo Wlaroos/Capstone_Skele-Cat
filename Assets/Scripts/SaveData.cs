@@ -55,7 +55,7 @@ public class SaveData : MonoBehaviour
     public void SaveToJson()
     {
         string levelData = JsonUtility.ToJson(_levelData);
-        Debug.Log(_filePath);
+        //Debug.Log(_filePath);
         System.IO.File.WriteAllText(_filePath, levelData);
         //Debug.Log("SAVED DATA");
         

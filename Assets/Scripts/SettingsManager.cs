@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,11 @@ public class SettingsManager : MonoBehaviour
 {
     public static SettingsManager Instance { get; set; }
 
-    private const int DefaultMusicVolume = 20;
-    private const int DefaultSfxVolume = 20;
-
-    public Button _defaultValuesButton;
+    [SerializeField] private const int DefaultMusicVolume = 20;
+    [SerializeField] private const int DefaultSfxVolume = 20;
+    [SerializeField] private const int DefaultScreenShake = 10;
+    
+    public event Action ReturnDefaultValues;
     
     private void Awake()
     {
@@ -22,24 +24,27 @@ public class SettingsManager : MonoBehaviour
         {
             Destroy(gameObject); // Ensures only one instance exists
         }
-        
-        DefaultValues();
+
+        if (!PlayerPrefs.HasKey("Music Volume"))
+        {
+            DefaultValues();
+        }
     }
-    
-    private void OnEnable()
+
+    private void Update()
     {
-        _defaultValuesButton = GameObject.Find("DefaultValuesButton").GetComponent<Button>();
-        _defaultValuesButton.onClick.AddListener(DefaultValues);
-    }
-    private void OnDisable()
-    {
-        _defaultValuesButton.onClick.RemoveListener(DefaultValues);
+        Debug.Log(PlayerPrefs.GetFloat("Music Volume") + "---" + PlayerPrefs.GetFloat("SFX Volume") + "---" + PlayerPrefs.GetFloat("Screen Shake"));
     }
 
     public void DefaultValues()
     {
         PlayerPrefs.SetFloat("Music Volume", DefaultMusicVolume);
         PlayerPrefs.SetFloat("SFX Volume", DefaultSfxVolume);
+        PlayerPrefs.SetFloat("Screen Shake", DefaultScreenShake);
+        
+        PlayerPrefs.Save();
+        
+        ReturnDefaultValues?.Invoke();
     }
     
     public void Music_Volume()
@@ -50,5 +55,10 @@ public class SettingsManager : MonoBehaviour
     public void SFX_Volume()
     {
         //Debug.Log("SFX VOLUME: " + PlayerPrefs.GetFloat("SFX Volume"));
+    }
+    
+    public void Screen_Shake()
+    {
+        //Debug.Log("SCREEN SHAKE: " + PlayerPrefs.GetFloat("Screen Shake"));
     }
 }

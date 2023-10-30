@@ -382,7 +382,7 @@ public class PlayerController : MonoBehaviour
     
     private void Respawn()
     {
-        Debug.Log("Respawned");
+        //Debug.Log("Respawned");
         _isAlive = true;
         _cc.enabled = true;
         _floatingParticle.gameObject.SetActive(true);
