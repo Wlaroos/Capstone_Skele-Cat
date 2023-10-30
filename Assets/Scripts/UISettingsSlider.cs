@@ -28,6 +28,7 @@ public class UISettingsSlider : MonoBehaviour
         _decButton.onClick.AddListener(DecrementValue);
         _incButton.onClick.AddListener(IncrementValue);
         _slider.onValueChanged.AddListener(SliderValueChange);
+        SettingsManager.Instance._defaultValuesButton.onClick.AddListener(DefaultValues);
     }
 
     private void OnDisable()
@@ -35,6 +36,7 @@ public class UISettingsSlider : MonoBehaviour
         _decButton.onClick.RemoveListener(DecrementValue);
         _incButton.onClick.RemoveListener(IncrementValue);
         _slider.onValueChanged.RemoveListener(SliderValueChange);
+        SettingsManager.Instance._defaultValuesButton.onClick.RemoveListener(DefaultValues);
     }
 
     private void Start()
@@ -63,6 +65,11 @@ public class UISettingsSlider : MonoBehaviour
         SettingsManager.Instance.Invoke(methodName, 0);
         
         _sliderText.text = _slider.value.ToString();
+    }
+    
+    public void DefaultValues()
+    {
+        _slider.value = PlayerPrefs.GetFloat(_keyName.text);
     }
     
     private void OnGUI()
