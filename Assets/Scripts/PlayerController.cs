@@ -347,7 +347,7 @@ public class PlayerController : MonoBehaviour
         //AudioHelper.PlayClip2D(_meowSFX, 1f);
         ParticleSystem bloodParticle = Instantiate(_bloodParticle, transform.position, Quaternion.identity , _particleHolder.transform);
         bloodParticle.GetComponent<BloodParticles>().SetParticleAmount(_bloodAmount);
-        //shake.CamShakeReverse();
+        CameraShake.Instance.CamShakeBig();
         StateChange();
     }
     

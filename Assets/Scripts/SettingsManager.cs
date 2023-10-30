@@ -10,7 +10,7 @@ public class SettingsManager : MonoBehaviour
 
     [SerializeField] private const int DefaultMusicVolume = 20;
     [SerializeField] private const int DefaultSfxVolume = 20;
-    [SerializeField] private const int DefaultScreenShake = 10;
+    [SerializeField] private const float DefaultScreenShake = 10;
     
     public event Action ReturnDefaultValues;
     

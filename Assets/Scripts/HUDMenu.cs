@@ -69,7 +69,7 @@ public class HUDMenu : MonoBehaviour
             if (_timerCount >= 1)
             { 
                 //_musicRef.PlaySound(_tickSFX);
-                // shake.CamShake();
+                CameraShake.Instance.CamShake();
             }
         }
     }
