@@ -6,8 +6,8 @@ using UnityEngine;
 public class AntiExplodeZone : MonoBehaviour
 {
     private PolygonCollider2D _col;
-    [SerializeField] private SpriteRenderer _sr;
-    [SerializeField] private SpriteRenderer _srOutline;
+    private SpriteRenderer _sr;
+    private SpriteRenderer _srOutline;
 
     private void Awake()
     {

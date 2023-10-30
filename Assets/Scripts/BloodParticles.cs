@@ -99,5 +99,12 @@ public class BloodParticles : MonoBehaviour
         var emission = _ps.emission;
         emission.SetBursts(new[]{ new ParticleSystem.Burst(0f, amount) });           
     }
+    
+    public void SetShape(int arc, Vector3 rot)
+    {
+        var shape = _ps.shape;
+        shape.arc = arc;
+        shape.rotation = rot;
+    }
 
 }
