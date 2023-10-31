@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 156483244}
   - component: {fileID: 156483243}
   m_Layer: 6
-  m_Name: Floor (5)
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 326709805}
   - component: {fileID: 326709806}
   m_Layer: 7
-  m_Name: Floor (5)
+  m_Name: ParticleGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -691,7 +691,7 @@ GameObject:
   - component: {fileID: 380037566}
   - component: {fileID: 380037567}
   m_Layer: 7
-  m_Name: Floor (5)
+  m_Name: ParticleGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -768,8 +768,8 @@ GameObject:
   - component: {fileID: 490839996}
   - component: {fileID: 490839995}
   - component: {fileID: 490839994}
-  m_Layer: 6
-  m_Name: Floor (4)
+  m_Layer: 10
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -984,7 +984,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1996174148430631518, guid: e237fa917a52a3545a84dc8f249bb61c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996174148430631518, guid: e237fa917a52a3545a84dc8f249bb61c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996174148430631518, guid: e237fa917a52a3545a84dc8f249bb61c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996174148430631518, guid: e237fa917a52a3545a84dc8f249bb61c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996174148430631518, guid: e237fa917a52a3545a84dc8f249bb61c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3790760290533827638, guid: e237fa917a52a3545a84dc8f249bb61c, type: 3}
       propertyPath: m_Size.x
@@ -1046,6 +1062,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplodeTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 8530798782624361445, guid: e237fa917a52a3545a84dc8f249bb61c, type: 3}
+      propertyPath: _arc
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 8530798782624361445, guid: e237fa917a52a3545a84dc8f249bb61c, type: 3}
+      propertyPath: _radial
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1062,7 +1086,7 @@ GameObject:
   - component: {fileID: 962592689}
   - component: {fileID: 962592690}
   m_Layer: 7
-  m_Name: Floor (5)
+  m_Name: ParticleGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1139,7 +1163,7 @@ GameObject:
   - component: {fileID: 965998643}
   - component: {fileID: 965998644}
   m_Layer: 7
-  m_Name: Floor (5)
+  m_Name: ParticleGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1216,8 +1240,8 @@ GameObject:
   - component: {fileID: 1134894190}
   - component: {fileID: 1134894189}
   - component: {fileID: 1134894188}
-  m_Layer: 6
-  m_Name: Floor (3)
+  m_Layer: 10
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2910,7 +2934,7 @@ GameObject:
   - component: {fileID: 2054610719}
   - component: {fileID: 2054610718}
   m_Layer: 6
-  m_Name: Floor (2)
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

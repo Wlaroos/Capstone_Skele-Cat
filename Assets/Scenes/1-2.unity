@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 156483244}
   - component: {fileID: 156483243}
   m_Layer: 6
-  m_Name: Floor (5)
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 326709805}
   - component: {fileID: 326709806}
   m_Layer: 7
-  m_Name: Floor (5)
+  m_Name: ParticleGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 380037566}
   - component: {fileID: 380037567}
   m_Layer: 7
-  m_Name: Floor (5)
+  m_Name: ParticleGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,8 +512,8 @@ GameObject:
   - component: {fileID: 490839996}
   - component: {fileID: 490839995}
   - component: {fileID: 490839994}
-  m_Layer: 6
-  m_Name: Floor (4)
+  m_Layer: 10
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -725,7 +725,7 @@ GameObject:
   - component: {fileID: 962592689}
   - component: {fileID: 962592690}
   m_Layer: 7
-  m_Name: Floor (5)
+  m_Name: ParticleGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 965998643}
   - component: {fileID: 965998644}
   m_Layer: 7
-  m_Name: Floor (5)
+  m_Name: ParticleGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -879,8 +879,8 @@ GameObject:
   - component: {fileID: 1134894190}
   - component: {fileID: 1134894189}
   - component: {fileID: 1134894188}
-  m_Layer: 6
-  m_Name: Floor (3)
+  m_Layer: 10
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2573,7 +2573,7 @@ GameObject:
   - component: {fileID: 2054610719}
   - component: {fileID: 2054610718}
   m_Layer: 6
-  m_Name: Floor (2)
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
