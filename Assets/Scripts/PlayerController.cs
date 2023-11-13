@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Particles")] [SerializeField] ParticleSystem _bloodParticle;
     [SerializeField] ParticleSystem _boneParticle;
-    [SerializeField] int _bloodAmount = 300;
-    [SerializeField] int _bloodDecrement = 100;
+    [SerializeField] private int _bloodAmount = 300;
+    private int _bloodDecrement;
     private ParticleSystem _floatingParticle;
 
     // OTHER VARS
@@ -97,8 +97,13 @@ public class PlayerController : MonoBehaviour
         _playerSpawn = transform.position;
         _particleHolder = GameObject.Find("ParticleHolder");
         _floatingParticle = transform.GetChild(3).GetComponent<ParticleSystem>();
-
+        
         _hud = FindObjectOfType<HUDMenu>();
+    }
+
+    private void Start()
+    {
+        _bloodDecrement = _bloodAmount / _hud.CurrentBloodHealth;
     }
 
     private void Update()
@@ -371,6 +376,12 @@ public class PlayerController : MonoBehaviour
         ParticleSystem bloodParticle = Instantiate(_bloodParticle, transform.position, Quaternion.identity,
             _particleHolder.transform);
         bloodParticle.GetComponent<BloodParticles>().SetParticleAmount(_bloodAmount);
+        
+        if (_hud.CurrentBloodHealth <= 0)
+        {
+            Instantiate(_boneParticle, transform.position, Quaternion.Euler(90, 0, 0));
+        }
+        
         CameraShake.Instance.CamShakeBig();
         StateChange();
     }
@@ -389,7 +400,7 @@ public class PlayerController : MonoBehaviour
         {
             Kill();
         }
-        else if (_hud.CurrentHealth == 1)
+        else if (_hud.CurrentBloodHealth <= 0)
         {
             _isSkeleton = true;
             _anim.SetTrigger("Skeleton");
@@ -434,7 +445,6 @@ public class PlayerController : MonoBehaviour
     private void Kill()
     {
         Debug.Log("Dead");
-        Instantiate(_boneParticle, transform.position, Quaternion.Euler(90, 0, 0));
         // Unhides the canvas UI
         Invoke(nameof(ShowDeathCanvas), 0.75f);
         //_musicRef.PlaySound(_deathSFX);

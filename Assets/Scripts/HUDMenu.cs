@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,10 +13,18 @@ public class HUDMenu : MonoBehaviour
     private float _timeRemaining = 1;
     
     private TMP_Text _levelName;
-    [SerializeField] private int _maxHealth;
+
+    private GameObject _gridLayout;
+    [SerializeField] private Sprite _catSprite;
+    [SerializeField] private Sprite _skullSprite;
+    private List<Image> _hpImgList = new List<Image>();
     
+    [SerializeField] private int _maxHealth;
+    [SerializeField] private int _maxBloodHealth;
     private int _currentHealth;
+    private int _currentBloodHealth;
     public int CurrentHealth { get => _currentHealth;}
+    public int CurrentBloodHealth { get => _currentBloodHealth;}
     
     private PlayerController _playerRef;
     private Canvas _hudCanvas;
@@ -25,6 +33,7 @@ public class HUDMenu : MonoBehaviour
     {
         _hudTimerText = transform.GetChild(0).GetComponent<TMP_Text>();
         _levelName = transform.GetChild(2).GetComponent<TMP_Text>();
+        _gridLayout = transform.GetChild(1).GetChild(0).gameObject;
         _playerRef = FindObjectOfType<PlayerController>();
         _hudCanvas = GetComponent<Canvas>();
         
@@ -33,6 +42,31 @@ public class HUDMenu : MonoBehaviour
         
         _timerCount = _maxTimerCount;
         _currentHealth = _maxHealth;
+        _currentBloodHealth = _maxBloodHealth;
+        
+        _gridLayout.GetComponent<RectTransform>().sizeDelta = new Vector2 (245, (((_currentHealth / 3) - 1) * 80) + 105);
+        _gridLayout.transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2 (245, (((_currentHealth / 3) - 1) * 80) + 105);
+
+        for (int i = 1; i <= _maxHealth; i++)
+        {
+            GameObject obj = new GameObject("Health");
+            obj.transform.SetParent(_gridLayout.transform);
+            Image img = obj.AddComponent<Image>();
+            
+            if (i <= _maxBloodHealth)
+            {
+                img.sprite = _catSprite;
+            }
+            else
+            {
+                img.sprite = _skullSprite;
+            }
+            
+            obj.transform.localScale = Vector3.one;
+            img.preserveAspect = true;
+            
+            _hpImgList.Add(img);
+        }
     }
 
     private void Start()
@@ -78,35 +112,13 @@ public class HUDMenu : MonoBehaviour
     {
         _timerCount = _maxTimerCount;
         _hudTimerText.text = ("" + ((Mathf.Round(_timeRemaining) + _timerCount - 1)));
-        
-        ChangeHealth(0);
     }
 
     public void ChangeHealth(int amount)
     {
+        _hpImgList[9 - _currentHealth].color = new Color(0.5f, 0, 0, 1);
         _currentHealth = Mathf.Clamp(_currentHealth += amount, 0, _maxHealth);
-        
-        switch (_currentHealth)
-        {
-            case 4:
-                transform.Find("HealthArea").Find("HP4").GetComponent<Image>().enabled = true;
-                transform.Find("HealthArea").Find("HP3").GetComponent<Image>().enabled = true;
-                transform.Find("HealthArea").Find("HP2").GetComponent<Image>().enabled = true;
-                transform.Find("HealthArea").Find("HP1").GetComponent<Image>().enabled = true;
-                break;
-            case 3:
-                transform.Find("HealthArea").Find("HP1").GetComponent<Image>().enabled = false;
-                break;
-            case 2:
-                transform.Find("HealthArea").Find("HP2").GetComponent<Image>().enabled = false;
-                break;
-            case 1:
-                transform.Find("HealthArea").Find("HP3").GetComponent<Image>().enabled = false;
-                break;
-            case <= 0:
-                transform.Find("HealthArea").Find("HP4").GetComponent<Image>().enabled = false;
-                break;
-        }
+        _currentBloodHealth = Mathf.Clamp(_currentBloodHealth += amount, 0, _maxBloodHealth);
     }
 
 }
