@@ -236,7 +236,7 @@ MonoBehaviour:
   _maxCoyoteTime: 0.1
   _maxJumpInputBuffer: 0.15
   _maxExtraJumps: 0
-  _groundCheckSize: {x: 0.66, y: 0.25}
+  _groundCheckSize: {x: 0.425, y: 0.25}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -247,7 +247,6 @@ MonoBehaviour:
   _bloodParticle: {fileID: 5632897500559924202, guid: 08329ae868c93d34db2acef6e73aa800, type: 3}
   _boneParticle: {fileID: 7962925166205161025, guid: aa43b427f688ce44496f434dd781b14e, type: 3}
   _bloodAmount: 300
-  _bloodDecrement: 100
 --- !u!95 &5921691157410461913
 Animator:
   serializedVersion: 5

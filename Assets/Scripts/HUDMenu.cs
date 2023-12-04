@@ -31,9 +31,9 @@ public class HUDMenu : MonoBehaviour
     
     private void Awake()
     {
-        _hudTimerText = transform.GetChild(0).GetComponent<TMP_Text>();
-        _levelName = transform.GetChild(2).GetComponent<TMP_Text>();
-        _gridLayout = transform.GetChild(1).GetChild(0).gameObject;
+        _hudTimerText = transform.GetChild(2).GetComponent<TMP_Text>();
+        _levelName = transform.GetChild(4).GetComponent<TMP_Text>();
+        _gridLayout = transform.GetChild(3).GetChild(0).gameObject;
         _playerRef = FindObjectOfType<PlayerController>();
         _hudCanvas = GetComponent<Canvas>();
         

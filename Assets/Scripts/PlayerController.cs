@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
     private Animator _anim;
 
     private HUDMenu _hud;
-
+    
     //
     private bool _isAlive = true;
     private bool _isSkeleton = false;
@@ -424,6 +424,8 @@ public class PlayerController : MonoBehaviour
         GetComponent<SpriteRenderer>().enabled = true;
 
         _hud.PlayerRespawned();
+        
+        _particleHolder.GetComponent<ParticleHolder>().RegenerateCollider();
     }
 
     public void NextLevel()

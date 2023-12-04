@@ -1089,7 +1089,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2108247387
   m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &4020397278182311820
@@ -2881,7 +2881,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2108247387
   m_SortingOrder: 12
   m_TargetDisplay: 0
 --- !u!114 &4926890548405343533
@@ -4148,7 +4148,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2108247387
   m_SortingOrder: 11
   m_TargetDisplay: 0
 --- !u!114 &407633064353642164

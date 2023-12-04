@@ -218,6 +218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5474771627093202241}
+  - component: {fileID: 7029502320255142415}
   m_Layer: 0
   m_Name: ParticleHolder
   m_TagString: Untagged
@@ -241,6 +242,20 @@ Transform:
   - {fileID: 7734625023293920588}
   m_Father: {fileID: 6184891925228755386}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7029502320255142415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8738522183318219794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1235205fb0c3eb24a863dc723f0243ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particlePrefab: {fileID: 424071478545461117, guid: 0d64fb79d1a11e249bd102f1403a8bb7, type: 3}
+  _poolingStartAmount: 1000
 --- !u!1001 &798572611776691269
 PrefabInstance:
   m_ObjectHideFlags: 0

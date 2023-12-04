@@ -9,6 +9,7 @@ using Object = UnityEngine.Object;
 public class BloodParticles : MonoBehaviour
 {
     private ParticleSystem _ps;
+    private ParticleHolder _particleHolder;
     
     // these lists are used to contain the particles which match
     // the trigger conditions each frame.
@@ -24,6 +25,7 @@ public class BloodParticles : MonoBehaviour
     private void Awake()
     {
         _ps = gameObject.GetComponent<ParticleSystem>(); // Get ParticleSystem reference
+        _particleHolder = transform.parent.GetComponent<ParticleHolder>();
         _collisionEvents = new List<ParticleCollisionEvent>(); // List of each collision event
         var emission = _ps.emission; // Make emission a variable
         emission.burstCount = ParticleAmount; // Change burst count
@@ -57,7 +59,17 @@ public class BloodParticles : MonoBehaviour
                 Vector3 pos = _collisionEvents[i].intersection;
                 // Spawn new collision that player can walk on
                 var rotation = other.transform.rotation;
-                Instantiate(_particleFloor, pos,Quaternion.EulerAngles(rotation.x, rotation.y, rotation.z * 2f), transform.parent.GetChild(0));
+                _particleHolder.SpawnParticle(pos);
+                //Instantiate(_particleFloor, pos,Quaternion.EulerAngles(rotation.x, rotation.y, rotation.z * 2f), transform.parent.GetChild(0));
+            }
+            else
+            {
+                // Collision position
+                Vector3 pos = _collisionEvents[i].intersection;
+                // Spawn new collision that player can walk on
+                var rotation = other.transform.rotation;
+                _particleHolder.SpawnParticleNoCollision(pos);
+                //Instantiate(_particleFloor, pos,Quaternion.EulerAngles(rotation.x, rotation.y, rotation.z * 2f), transform.parent.GetChild(0)); 
             }
             i++;
         }
