@@ -1367,7 +1367,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Three Lives with <color=red>blood</color>, six <color=grey>without</color>
+  m_text: 'Three Lives with <color=red>blood</color>, six <color=#424242>without</color>
 
 
     Press
@@ -1515,6 +1515,10 @@ PrefabInstance:
     - target: {fileID: 221241848114429821, guid: 92c39b56de64d2b48bd816db313b2001, type: 3}
       propertyPath: m_Size.x
       value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 221241848114429821, guid: 92c39b56de64d2b48bd816db313b2001, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1546351613312146771, guid: 92c39b56de64d2b48bd816db313b2001, type: 3}
       propertyPath: m_Name
@@ -2819,6 +2823,14 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 24
       objectReference: {fileID: 0}
+    - target: {fileID: 221241848114429821, guid: 92c39b56de64d2b48bd816db313b2001, type: 3}
+      propertyPath: m_DrawMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 221241848114429821, guid: 92c39b56de64d2b48bd816db313b2001, type: 3}
+      propertyPath: m_SpriteTileMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1546351613312146771, guid: 92c39b56de64d2b48bd816db313b2001, type: 3}
       propertyPath: m_Name
       value: KillZone_Triangle
@@ -2930,7 +2942,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 2caa5312bdf01354485a1bf41c99eeba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3017,11 +3029,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6465317404071730852, guid: 48bcba95e78a08b4fb224550d844e8fd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.5
+      value: 8.25
       objectReference: {fileID: 0}
     - target: {fileID: 6465317404071730852, guid: 48bcba95e78a08b4fb224550d844e8fd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.57
+      value: -11
       objectReference: {fileID: 0}
     - target: {fileID: 6465317404071730852, guid: 48bcba95e78a08b4fb224550d844e8fd, type: 3}
       propertyPath: m_LocalPosition.z

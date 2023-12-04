@@ -40,6 +40,11 @@ public class SaveData : MonoBehaviour
                 .GetScenePathByBuildIndex(i)));
         }
 
+        if (_scenes.Count != _levelData._levels.Count)
+        {
+            ClearJson();
+        }
+
         // If file exists, use that. If not, initialize with default values.
         if (File.Exists(_filePath))
         {

@@ -12,6 +12,7 @@ public class HUDMenu : MonoBehaviour
     private int _timerCount = 10;
     private float _timeRemaining = 1;
     
+    private TMP_Text _levelNumber;
     private TMP_Text _levelName;
 
     private GameObject _gridLayout;
@@ -29,13 +30,17 @@ public class HUDMenu : MonoBehaviour
     private PlayerController _playerRef;
     private Canvas _hudCanvas;
     
+    private LevelList _levelList;
+    
     private void Awake()
     {
         _hudTimerText = transform.GetChild(2).GetComponent<TMP_Text>();
-        _levelName = transform.GetChild(4).GetComponent<TMP_Text>();
+        _levelNumber = transform.GetChild(4).GetComponent<TMP_Text>();
+        _levelName = transform.GetChild(5).GetComponent<TMP_Text>();
         _gridLayout = transform.GetChild(3).GetChild(0).gameObject;
         _playerRef = FindObjectOfType<PlayerController>();
         _hudCanvas = GetComponent<Canvas>();
+        _levelList = (LevelList)Resources.Load("LevelListSO");
         
         var main = Camera.main;
         _hudCanvas.worldCamera = main;
@@ -71,7 +76,9 @@ public class HUDMenu : MonoBehaviour
 
     private void Start()
     {
-        _levelName.text = ("Level: " + SceneManager.GetActiveScene().name);
+        int index = SceneManager.GetActiveScene().buildIndex - 2;
+        _levelNumber.text = ("Level: " + SceneManager.GetActiveScene().name);
+        _levelName.text = (_levelList._levelNameList[index]._levelName);
     }
 
     private void Update()

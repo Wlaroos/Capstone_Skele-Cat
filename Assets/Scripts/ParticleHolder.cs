@@ -23,29 +23,36 @@ public class ParticleHolder : MonoBehaviour
         }
     }
 
-    public void SpawnParticle(Vector2 pos)
+    public void SpawnParticle(Vector2 pos, Quaternion rot)
     {
+        var rotation = Quaternion.EulerAngles(rot.x, rot.y, rot.z * 2f);
         if (_poolingNum < _poolingStartAmount)
         {
             _particleList[_poolingNum].transform.position = pos;
+            _particleList[_poolingNum].transform.GetChild(0).rotation = rotation;
         }
         else
         {
             CreateParticle();
+            _particleList[_poolingNum].transform.position = pos;
+            _particleList[_poolingNum].transform.GetChild(0).rotation = rotation;
         }
         _poolingNum++;
     }
     
-    public void SpawnParticleNoCollision(Vector2 pos)
+    public void SpawnParticleNoCollision(Vector2 pos, Quaternion rot)
     {
+        var rotation = Quaternion.EulerAngles(rot.x, rot.y, rot.z * 2f);
         if (_poolingNum < _poolingStartAmount)
         {
             _particleList[_poolingNum].transform.position = pos;
-            _particleList[_poolingNum].transform.GetComponent<BoxCollider2D>().enabled = false;
+            _particleList[_poolingNum].transform.GetComponentInChildren<BoxCollider2D>().enabled = false;
         }
         else
         {
             CreateParticle();
+            _particleList[_poolingNum].transform.position = pos;
+            _particleList[_poolingNum].transform.GetComponentInChildren<BoxCollider2D>().enabled = false;
         }
         _poolingNum++;
     }
@@ -58,7 +65,6 @@ public class ParticleHolder : MonoBehaviour
         float size = Random.Range(0.2f, 0.4f);
         sr.size = new Vector2(size,size);
         sr.color = new Color32((byte)Random.Range(70f, 255f), 0, 0, 255);
-        sr.enabled = true;
            
         _particleList.Add(particle);
     }

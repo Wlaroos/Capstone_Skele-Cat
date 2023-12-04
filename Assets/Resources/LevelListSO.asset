@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: LevelListSO
   m_EditorClassIdentifier: 
   _levelNameList:
-  - _levelName: Tutorial 01
-    _levelDescription: Teaches player about
-  - _levelName: Level 02
-    _levelDescription: Teaches player about
-  - _levelName: TESTING
-    _levelDescription: Teaches player about
+  - _levelName: Walking
+    _levelDescription: Baby's first steps!
+  - _levelName: Jumping
+    _levelDescription: Bouncy paws
+  - _levelName: Exploding
+    _levelDescription: I want that cat to blow itself up! NOW!
+  - _levelName: Pillars
+    _levelDescription: Nine Lives
+  - _levelName: Pocket
+    _levelDescription: Precision of explosions
