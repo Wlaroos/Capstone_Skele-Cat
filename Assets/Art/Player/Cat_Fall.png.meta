@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 37aeebc03f7527241b64914955061041
+guid: e2e362ac810510a4a9c371c7a40aca51
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,34 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Skeleton_Jump_Outline_0
+      name: Cat_FallNew_Outline_0
       rect:
         serializedVersion: 2
         x: 4
-        y: 4
-        width: 23
+        y: 5
+        width: 25
         height: 25
+      alignment: 9
+      pivot: {x: 0.48, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d13267e708885934da8593ae0f4c1e6f
+      internalID: 938181272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cat_FallNew_Outline_1
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 8
+        width: 23
+        height: 22
       alignment: 9
       pivot: {x: 0.47826087, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,8 +158,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d25e40ca53c2c749adf76a5c80cfc63
-      internalID: 838303355
+      spriteID: 95e820783818238489afaef6d23a0dd9
+      internalID: -555413389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cat_FallNew_Outline_2
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 4
+        width: 27
+        height: 26
+      alignment: 9
+      pivot: {x: 0.4814815, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6453dce7251ef0c43a16b78845e25e61
+      internalID: 441824151
       vertices: []
       indices: 
       edges: []
@@ -154,7 +196,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Skeleton_Jump_Outline_0: 838303355
+      Cat_FallNew_Outline_0: 938181272
+      Cat_FallNew_Outline_1: -555413389
+      Cat_FallNew_Outline_2: 441824151
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

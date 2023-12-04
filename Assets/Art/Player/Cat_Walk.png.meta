@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 73348713cab61864c8837d1979437414
+guid: e402c7e2c05379a4babe37f0fe018f12
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -126,10 +126,10 @@ TextureImporter:
       name: Cat_Walk_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 6
-        width: 20
-        height: 22
+        x: 4
+        y: 5
+        width: 22
+        height: 24
       alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,10 +147,10 @@ TextureImporter:
       name: Cat_Walk_1
       rect:
         serializedVersion: 2
-        x: 35
-        y: 6
-        width: 20
-        height: 21
+        x: 34
+        y: 5
+        width: 22
+        height: 23
       alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,12 +168,12 @@ TextureImporter:
       name: Cat_Walk_2
       rect:
         serializedVersion: 2
-        x: 65
-        y: 6
-        width: 22
-        height: 22
+        x: 64
+        y: 5
+        width: 24
+        height: 24
       alignment: 9
-      pivot: {x: 0.54545456, y: -0}
+      pivot: {x: 0.5416667, y: -0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -189,12 +189,12 @@ TextureImporter:
       name: Cat_Walk_3
       rect:
         serializedVersion: 2
-        x: 97
-        y: 6
-        width: 24
-        height: 21
+        x: 96
+        y: 5
+        width: 26
+        height: 23
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5769231, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -210,12 +210,12 @@ TextureImporter:
       name: Cat_Walk_4
       rect:
         serializedVersion: 2
-        x: 131
-        y: 6
-        width: 24
-        height: 20
+        x: 130
+        y: 5
+        width: 26
+        height: 22
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5769231, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -231,12 +231,12 @@ TextureImporter:
       name: Cat_Walk_5
       rect:
         serializedVersion: 2
-        x: 165
-        y: 6
-        width: 22
-        height: 21
+        x: 164
+        y: 5
+        width: 24
+        height: 23
       alignment: 9
-      pivot: {x: 0.54545456, y: 0}
+      pivot: {x: 0.5416667, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -252,12 +252,12 @@ TextureImporter:
       name: Cat_Walk_6
       rect:
         serializedVersion: 2
-        x: 197
-        y: 6
-        width: 21
-        height: 22
+        x: 196
+        y: 5
+        width: 23
+        height: 24
       alignment: 9
-      pivot: {x: 0.52380955, y: 0}
+      pivot: {x: 0.5217391, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -273,12 +273,12 @@ TextureImporter:
       name: Cat_Walk_7
       rect:
         serializedVersion: 2
-        x: 228
-        y: 6
-        width: 19
-        height: 23
+        x: 227
+        y: 5
+        width: 21
+        height: 25
       alignment: 9
-      pivot: {x: 0.47368422, y: 0}
+      pivot: {x: 0.47619048, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

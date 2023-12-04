@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 86b539163d04ede4991ff49517e7c6fe
+guid: c0e81d039be3d8d408732df816ee3ff9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -46,10 +46,10 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.6451613, y: 0.15151516}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 15
-  spriteBorder: {x: 5, y: 5, z: 5, w: 5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -123,22 +123,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cat_Jump_0
+      name: Skeleton_Jump_0
       rect:
         serializedVersion: 2
         x: 4
         y: 4
-        width: 23
-        height: 25
+        width: 26
+        height: 27
       alignment: 9
-      pivot: {x: 0.47826087, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e10aa65889c748f42bc4842df6524d58
-      internalID: 231576011
+      spriteID: 10e9653403f54ca46a0f36d1841ae083
+      internalID: 1578864763
       vertices: []
       indices: 
       edges: []
@@ -147,14 +147,14 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Cat_Jump_0: 231576011
+      Skeleton_Jump_0: 1578864763
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

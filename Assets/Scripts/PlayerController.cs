@@ -422,6 +422,8 @@ public class PlayerController : MonoBehaviour
         _cc.enabled = true;
         _floatingParticle.gameObject.SetActive(true);
         GetComponent<SpriteRenderer>().enabled = true;
+        
+        _anim.SetBool("Jumping", false);
 
         _hud.PlayerRespawned();
         
