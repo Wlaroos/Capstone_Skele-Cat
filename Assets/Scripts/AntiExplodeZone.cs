@@ -9,6 +9,7 @@ public class AntiExplodeZone : MonoBehaviour
     private SpriteRenderer _sr;
     private SpriteRenderer _srOutline;
 
+    // Setup
     private void Awake()
     {
         _sr = GetComponent<SpriteRenderer>();
@@ -19,6 +20,7 @@ public class AntiExplodeZone : MonoBehaviour
         _srOutline.color *= new Color32(255, 0, 0, 5);
     }
 
+    // Inhibit Explosion
     private void OnTriggerEnter2D(Collider2D other)
     {
         PlayerController playerController = other.GetComponent<PlayerController>();
@@ -26,6 +28,7 @@ public class AntiExplodeZone : MonoBehaviour
         playerController?.SetCanPressExplode(false);
     }
 
+    // Allow Explosion
     private void OnTriggerExit2D(Collider2D other)
     {
         PlayerController playerController = other.GetComponent<PlayerController>();

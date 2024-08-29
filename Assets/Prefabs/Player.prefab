@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 10
   _jumpGravScale: 5
-  _fallGravScale: 12
+  _fallGravScale: 10
   _jumpForce: 12
   _maxJumpHold: 0.2
   _maxCoyoteTime: 0.1

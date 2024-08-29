@@ -655,7 +655,7 @@ MonoBehaviour:
   _maxTimerCount: 10
   _catSprite: {fileID: -1727327723, guid: 441d40aa99d1c29428611d8a0427b2f6, type: 3}
   _skullSprite: {fileID: -1283111650, guid: 441d40aa99d1c29428611d8a0427b2f6, type: 3}
-  _maxHealth: 9
+  _maxHealth: 6
   _maxBloodHealth: 3
 --- !u!1 &4217584531438961751
 GameObject:

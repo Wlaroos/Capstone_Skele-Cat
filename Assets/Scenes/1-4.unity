@@ -1367,7 +1367,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Three Lives with <color=red>blood</color>, six <color=#424242>without</color>
+  m_text: 'Three Lives with <color=red>blood</color>, three <color=#424242>without</color>
 
 
     Press
@@ -1434,7 +1434,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: -2.0391235}
+  m_margin: {x: -0.44440746, y: 0, z: -0.44440746, w: -2.0391235}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0

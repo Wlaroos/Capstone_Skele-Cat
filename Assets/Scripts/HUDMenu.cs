@@ -123,7 +123,7 @@ public class HUDMenu : MonoBehaviour
 
     public void ChangeHealth(int amount)
     {
-        _hpImgList[9 - _currentHealth].color = new Color(0.5f, 0, 0, 1);
+        _hpImgList[_maxHealth - _currentHealth].color = new Color(0.5f, 0, 0, 1);
         _currentHealth = Mathf.Clamp(_currentHealth += amount, 0, _maxHealth);
         _currentBloodHealth = Mathf.Clamp(_currentBloodHealth += amount, 0, _maxBloodHealth);
     }
