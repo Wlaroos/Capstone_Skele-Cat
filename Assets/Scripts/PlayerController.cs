@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
                 _isJumping = true;
                 _anim.SetBool("Jumping", true);
                 _jumpHoldTimer = _maxJumpHold;
-                _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+                _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpForce);
                 _extraJumps -= 1;
                 _jumpInputBufferTimer = 0;
 
@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
             _isJumping = true;
             _anim.SetBool("Jumping", true);
             _jumpHoldTimer = _maxJumpHold;
-            _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpForce);
 
             _jumpInputBufferTimer = 0;
 
@@ -192,10 +192,10 @@ public class PlayerController : MonoBehaviour
         {
             if (_jumpHoldTimer > 0 && _isJumping)
             {
-                _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+                _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpForce);
                 _jumpHoldTimer -= Time.deltaTime;
             }
-            else if (_jumpHoldTimer <= 0 && _rb.velocity.y < 0)
+            else if (_jumpHoldTimer <= 0 && _rb.linearVelocity.y < 0)
             {
                 _isJumping = false;
                 _anim.SetBool("Jumping", false);
@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour
         // Move the player horizontally.
         float moveDirection = Input.GetAxisRaw("Horizontal");
 
-        _rb.velocity = new Vector2(moveDirection * _moveSpeed, _rb.velocity.y);
+        _rb.linearVelocity = new Vector2(moveDirection * _moveSpeed, _rb.linearVelocity.y);
 
         _anim.SetFloat("HorizontalSpeed", Mathf.Abs(moveDirection));
 
@@ -236,21 +236,21 @@ public class PlayerController : MonoBehaviour
         // SLOPE CHECK BITCHES
         if (IsGrounded() && _isOnSlope && _canWalkOnSlope && !_isJumping) //If on slope
         {
-            _rb.velocity = new Vector2(_moveSpeed * _slopeNormalPerp.x * -moveDirection,
+            _rb.linearVelocity = new Vector2(_moveSpeed * _slopeNormalPerp.x * -moveDirection,
                 _moveSpeed * _slopeNormalPerp.y * -moveDirection);
         }
 
-        if (_rb.velocity.y > 15)
+        if (_rb.linearVelocity.y > 15)
         {
-            _rb.velocity = new Vector2(_rb.velocity.x, 15f);
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 15f);
         }
 
         // FLIP CHECKS
-        if (_rb.velocity.x > 0 && !_facingRight) // Moving right, facing left
+        if (_rb.linearVelocity.x > 0 && !_facingRight) // Moving right, facing left
         {
             Flip(); // Flip right
         }
-        else if (_rb.velocity.x < 0 && _facingRight) // Moving left, facing right
+        else if (_rb.linearVelocity.x < 0 && _facingRight) // Moving left, facing right
         {
             Flip(); // Flip left
         }
@@ -363,7 +363,7 @@ public class PlayerController : MonoBehaviour
         _floatingParticle.gameObject.SetActive(false);
         //_musicRef.PlaySound(_floatSFX);
         _rb.gravityScale = 0;
-        _rb.velocity = new Vector2(0, 1f);
+        _rb.linearVelocity = new Vector2(0, 1f);
         _cc.enabled = false;
 
         Invoke("ExplodeDelay", .75f);
@@ -390,7 +390,7 @@ public class PlayerController : MonoBehaviour
 
     private void StateChange()
     {
-        _rb.velocity = new Vector3(0, 0, 0);
+        _rb.linearVelocity = new Vector3(0, 0, 0);
         _rb.gravityScale = 0;
         GetComponent<SpriteRenderer>().enabled = false;
         _bloodAmount -= _bloodDecrement;
@@ -436,7 +436,7 @@ public class PlayerController : MonoBehaviour
         //_musicRef.PlaySound(_floatSFX);
         _floatingParticle.gameObject.SetActive(false);
         //GetComponent<CharacterAnimations>().setIsAlive(false);
-        _rb.velocity = new Vector3(0, 0, 0);
+        _rb.linearVelocity = new Vector3(0, 0, 0);
         _rb.gravityScale = 0;
         float timer = .75f;
         while (timer >= 0)

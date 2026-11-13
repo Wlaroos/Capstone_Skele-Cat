@@ -83,13 +83,13 @@ public class CameraShake : MonoBehaviour
     public void CamShake()
     {
         StopAllCoroutines();
-        StartCoroutine(Shake(.15f, 1));
+        StartCoroutine(Shake(.3f, .5f));
     }
 
     public void CamShakeBig()
     {
         StopAllCoroutines();
-        StartCoroutine(BigShake(.21f, 1));
+        StartCoroutine(BigShake(.21f, .75f));
     }
 
 }

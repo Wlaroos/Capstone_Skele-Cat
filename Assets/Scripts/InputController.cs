@@ -13,6 +13,7 @@ public class InputController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(this);
         }
         else
         {
